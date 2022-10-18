@@ -36,7 +36,7 @@ class MonticuloBinario:
 
         Returns
         -------
-        string
+        str
             String con todos los elementos del Montículo.
 
         '''
