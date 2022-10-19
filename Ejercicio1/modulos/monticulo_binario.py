@@ -1,4 +1,5 @@
 
+# Hacer modificaciones finales a los docstrings del montículo 
 
 class MonticuloBinario:
     
@@ -49,13 +50,13 @@ class MonticuloBinario:
     
     def infilt_arriba(self, i):
         '''
-        Infiltra un nuevo ítem hacia arriba en el árbol hasta donde 
+        Infiltra un ítem hacia arriba en el árbol hasta donde 
         sea necesario para mantener la propiedad de montículo.
 
         Parameters
         ----------
         i : int
-            Tamaño del montículo.
+            Tamaño del Montículo.
 
         Returns
         -------
@@ -64,9 +65,9 @@ class MonticuloBinario:
         '''
         while i // 2 > 0:
           if self.listaMonticulo[i] < self.listaMonticulo[i // 2]:
-             tmp = self.listaMonticulo[i // 2]
+             temp = self.listaMonticulo[i // 2]
              self.listaMonticulo[i // 2] = self.listaMonticulo[i]
-             self.listaMonticulo[i] = tmp
+             self.listaMonticulo[i] = temp
           i = i // 2
     
     
@@ -78,7 +79,7 @@ class MonticuloBinario:
         Parameters
         ----------
         k : int
-            Ítem que se inserta.
+            Ítem que se inserta en el Montículo.
 
         Returns
         -------
@@ -91,16 +92,44 @@ class MonticuloBinario:
     
     
     def infilt_abajo(self, i):
+        '''
+        Infiltra un ítem hacia abajo en el árbol hasta donde 
+        sea necesario para mantener la propiedad de montículo.
+
+        Parameters
+        ----------
+        i : int
+            Hijo menor de la raíz del Montículo.
+
+        Returns
+        -------
+        None.
+
+        '''
         while (i * 2) <= self.tamanoActual:
-            hm = self.hijoMin(i)
+            hm = self.hijoMin(i)    # Hijo 
             if self.listaMonticulo[i] > self.listaMonticulo[hm]:
-                tmp = self.listaMonticulo[i]
+                temp = self.listaMonticulo[i]
                 self.listaMonticulo[i] = self.listaMonticulo[hm]
-                self.listaMonticulo[hm] = tmp
+                self.listaMonticulo[hm] = temp
             i = hm
     
     
     def hijoMin(self, i):
+        '''
+        Encuentra el Hijo mínimo de un ítem.
+
+        Parameters
+        ----------
+        i : int
+            DESCRIPTION.
+
+        Returns
+        -------
+        int
+            DESCRIPTION.
+
+        '''
         if i * 2 + 1 > self.tamanoActual:
             return i * 2
         else:
@@ -111,6 +140,17 @@ class MonticuloBinario:
     
     
     def eliminar_min(self):
+        '''
+        Elimina el valor mínimo del Montículo.
+        Gran parte del proceso se realiza 
+        cuando se llama al método: "infilt_abajo"
+
+        Returns
+        -------
+        valorSacado : any type
+            DESCRIPTION.
+
+        '''
         valorSacado = self.listaMonticulo[1]
         self.listaMonticulo[1] = self.listaMonticulo[self.tamanoActual]
         self.tamanoActual = self.tamanoActual - 1
