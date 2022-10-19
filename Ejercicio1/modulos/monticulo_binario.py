@@ -3,10 +3,12 @@
 class MonticuloBinario:
     
     def __init__(self):
-        self.listaMonticulo = [0]
+        self.listaMonticulo = ['']
         self.tamanoActual = 0
         self.hijoMin
         
+        
+    # Métodos Mágicos
     
     def __len__(self):
         '''
@@ -43,7 +45,23 @@ class MonticuloBinario:
         return str(self.listaMonticulo)
     
     
-    def infilt_arriba(self,i):
+    # Métodos
+    
+    def infilt_arriba(self, i):
+        '''
+        Infiltra un nuevo ítem hacia arriba en el árbol hasta donde 
+        sea necesario para mantener la propiedad de montículo.
+
+        Parameters
+        ----------
+        i : int
+            Tamaño del montículo.
+
+        Returns
+        -------
+        None.
+
+        '''
         while i // 2 > 0:
           if self.listaMonticulo[i] < self.listaMonticulo[i // 2]:
              tmp = self.listaMonticulo[i // 2]
@@ -52,7 +70,27 @@ class MonticuloBinario:
           i = i // 2
     
     
-    def infilt_abajo(self,i):
+    def insertar(self, k):
+        '''
+        Recibe un ítem como parámetro, lo inserta en el Montículo y llama
+        al método "infilt_arriba".
+
+        Parameters
+        ----------
+        k : int
+            Ítem que se inserta.
+
+        Returns
+        -------
+        None.
+
+        '''
+        self.listaMonticulo.append(k)
+        self.tamanoActual = self.tamanoActual + 1
+        self.infilt_arriba(self.tamanoActual)
+    
+    
+    def infilt_abajo(self, i):
         while (i * 2) <= self.tamanoActual:
             hm = self.hijoMin(i)
             if self.listaMonticulo[i] > self.listaMonticulo[hm]:
@@ -62,7 +100,7 @@ class MonticuloBinario:
             i = hm
     
     
-    def hijoMin(self,i):
+    def hijoMin(self, i):
         if i * 2 + 1 > self.tamanoActual:
             return i * 2
         else:
@@ -70,12 +108,6 @@ class MonticuloBinario:
                 return i * 2
             else:
                 return i * 2 + 1
-    
-    
-    def insertar(self,k):
-        self.listaMonticulo.append(k)
-        self.tamanoActual = self.tamanoActual + 1
-        self.infilt_arriba(self.tamanoActual)
     
     
     def eliminar_min(self):
