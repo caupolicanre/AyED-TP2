@@ -5,8 +5,8 @@ Sala de emergencias
 
 import time
 import datetime
-import modulos.paciente as pac
-import modulos.monticulo_binario as mon
+import Ejercicio1.modulos.paciente as pac
+import Ejercicio1.modulos.monticulo_binario as mon
 import random
 
 n = 20  # cantidad de ciclos de simulación
@@ -24,7 +24,7 @@ for i in range(n):
 
     # Se crea un paciente un paciente por segundo
     # La criticidad del paciente es aleatoria
-    paciente = pac.Paciente(i+1)  # Se inicializa con un turno de llegada
+    paciente = pac.Paciente(i+1)  # Se inicializa con un turno de llegada y se registra la hora de ingreso
     cola_de_espera.insertar(paciente)
 
     # Atención de paciente en este ciclo: en el 50% de los casos
