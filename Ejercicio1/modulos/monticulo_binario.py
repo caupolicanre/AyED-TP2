@@ -1,5 +1,5 @@
 
-# Hacer modificaciones finales a los docstrings del montículo 
+# Hacer modificaciones finales a los docstrings del montículo y algunas pruebas locales.
 
 class MonticuloBinario:
     
