@@ -5,6 +5,7 @@ class NodoArbol:
         self.hijoIzquierdo = izquierdo
         self.hijoDerecho = derecho
         self.padre = padre
+        self.factorEquilibrio = 0
 
     def tiene_hijo_izquierdo(self):
         '''
@@ -104,22 +105,45 @@ class NodoArbol:
         '''
         return self.hijoDerecho and self.hijoIzquierdo
 
-    def reemplazar_dato_de_nodo(self,clave,valor,hizq,hder):
+    def reemplazar_dato_de_nodo(self, clave, valor, hizq, hder):
+        '''
+        
+
+        Parameters
+        ----------
+        clave : any type
+            Clave nueva que va a reemplazar la actual.
+        valor : any type
+            Carga útil que va a reemplazar la actual.
+        hizq : reference
+            Hijo izquierdo que va a reemplazar al actual.
+        hder : reference
+            Hijo derecho que va a reemplazar al actual.
+
+        Returns
+        -------
+        None.
+
+        '''
+        # Actualizo properties del Nodo
         self.clave = clave
         self.cargaUtil = valor
         self.hijoIzquierdo = hizq
         self.hijoDerecho = hder
+        
+        # Si el Nodo tiene hijos, actualizo el padre de éstos
         if self.tiene_hijo_izquierdo():
             self.hijoIzquierdo.padre = self
         if self.tiene_hijo_derecho():
             self.hijoDerecho.padre = self
 
 
+
 class AVL:
 
     def __init__(self):
         self.raiz = None
-        self.tamano = 0
+        self.tamano = 0     # Contador del tamaño del Árbol
 
     def longitud(self):
         '''
@@ -147,14 +171,16 @@ class AVL:
 
     def agregar(self, clave, valor):
         '''
-        
+        Si el árbol no está vacío (Tiene raíz), llama al método
+        "_agregar". Si el árbol está vacío, crea un nuevo Nodo,
+        actualiza la raíz, y aumenta el contador del tamaño.
 
         Parameters
         ----------
-        clave : TYPE
-            DESCRIPTION.
-        valor : TYPE
-            DESCRIPTION.
+        clave : any type
+            Clave del Nodo a agregar.
+        valor : any type
+            Carga útil que contiene el Nodo a agregar.
 
         Returns
         -------
@@ -162,9 +188,17 @@ class AVL:
 
         '''
         if self.raiz:
+            '''
+            El Árbol tiene raíz (No está vacío).
+            '''
             self._agregar(clave, valor, self.raiz)
+            
         else:
-            self.raiz = NodoArbol(clave, valor)
+            '''
+            El Árbol no tiene raíz (Está vacío).
+            '''
+            self.raiz = NodoArbol(clave, valor) # Crea un nuevo Nodo y actualiza la raíz con éste
+        
         self.tamano = self.tamano + 1   # Aumento el tamaño del árbol
 
     def _agregar(self, clave, valor, nodoActual):
@@ -173,10 +207,10 @@ class AVL:
 
         Parameters
         ----------
-        clave : TYPE
-            DESCRIPTION.
+        clave : any ype
+            Clave del Nodo a agregar.
         valor : TYPE
-            DESCRIPTION.
+            Carga útil que contiene el Nodo a agregar.
         nodoActual : TYPE
             DESCRIPTION.
 
@@ -187,18 +221,73 @@ class AVL:
         '''
         if clave < nodoActual.clave:
             if nodoActual.tiene_hijo_izquierdo():
-                   self._agregar(clave, valor, nodoActual.hijoIzquierdo)
+                    self._agregar(clave, valor, nodoActual.hijoIzquierdo)
             else:
-                   nodoActual.hijoIzquierdo = NodoArbol(clave, valor, padre=nodoActual)
+                    nodoActual.hijoIzquierdo = NodoArbol(clave, valor, padre=nodoActual)
+                    self.actualizar_equilibrio(nodoActual.hijoIzquierdo)
         else:
             if nodoActual.tiene_hijo_derecho():
-                   self._agregar(clave, valor, nodoActual.hijoDerecho)
+                    self._agregar(clave, valor, nodoActual.hijoDerecho)
             else:
-                   nodoActual.hijoDerecho = NodoArbol(clave, valor, padre=nodoActual)
+                    nodoActual.hijoDerecho = NodoArbol(clave, valor, padre=nodoActual)
+                    self.actualizar_equilibrio(nodoActual.hijoDerecho)
 
-    def __setitem__(self, c, v):
+    def actualizar_equilibrio(self, nodo):
         '''
         
+
+        Parameters
+        ----------
+        nodo : TYPE
+            DESCRIPTION.
+
+        Returns
+        -------
+        None.
+
+        '''
+        if nodo.factorEquilibrio > 1 or nodo.factorEquilibrio < -1:
+            self.reequilibrar(nodo)
+            return
+        if nodo.padre != None:
+            if nodo.esHijoIzquierdo():
+                    nodo.padre.factorEquilibrio += 1
+            elif nodo.esHijoDerecho():
+                    nodo.padre.factorEquilibrio -= 1
+    
+            if nodo.padre.factorEquilibrio != 0:
+                    self.actualizar_equilibrio(nodo.padre)
+    
+    def reequilibrar(self,nodo):
+        '''
+        
+
+        Parameters
+        ----------
+        nodo : TYPE
+            DESCRIPTION.
+
+        Returns
+        -------
+        None.
+
+        '''
+        if nodo.factorEquilibrio < 0:
+               if nodo.hijoDerecho.factorEquilibrio > 0:
+                  self.rotarDerecha(nodo.hijoDerecho)
+                  self.rotarIzquierda(nodo)
+               else:
+                  self.rotarIzquierda(nodo)
+        elif nodo.factorEquilibrio > 0:
+               if nodo.hijoIzquierdo.factorEquilibrio < 0:
+                  self.rotarIzquierda(nodo.hijoIzquierdo)
+                  self.rotarDerecha(nodo)
+               else:
+                  self.rotarDerecha(nodo)
+    
+    def __setitem__(self, c, v):
+        '''
+        Llama al método "agregar".
 
         Parameters
         ----------
