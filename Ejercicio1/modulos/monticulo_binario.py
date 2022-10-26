@@ -1,5 +1,5 @@
 
-# Hacer modificaciones finales a los docstrings del montÃ­culo y algunas pruebas locales.
+# Hacer modificaciones finales a los docstrings del montí­culo y algunas pruebas locales.
 
 class MonticuloBinario:
     
@@ -9,16 +9,16 @@ class MonticuloBinario:
         self.hijoMin
         
         
-    # MÃ©todos MÃ¡gicos
+    # Métodos Mágicos
     
     def __len__(self):
         '''
-        MÃ©todo mÃ¡gico que retorna el tamaÃ±o del montÃ­culo.
+        Método mágico que retorna el tamaño del mMntí­culo.
 
         Returns
         -------
         int
-            Entero que representa el tamaÃ±o del MontÃ­culo.
+            Entero que representa el tamaño del Montí­culo.
 
         '''
         return self.tamanoActual
@@ -26,7 +26,7 @@ class MonticuloBinario:
     
     def __iter__(self):
         '''
-        MÃ©todo para iterar el MontÃ­culo.
+        Método para iterar el Montí­culo.
         '''
         
         for i in self.listaMonticulo:
@@ -35,12 +35,12 @@ class MonticuloBinario:
     
     def __str__(self):
         '''
-        Retorna todos los elementos del montÃ­culo.
+        Retorna todos los elementos del Montí­culo.
 
         Returns
         -------
         str
-            String con todos los elementos del MontÃ­culo.
+            String con todos los elementos del Montí­culo.
 
         '''
         return str(self.listaMonticulo)
@@ -50,13 +50,13 @@ class MonticuloBinario:
     
     def infilt_arriba(self, i):
         '''
-        Infiltra un Ã­tem hacia arriba en el Ã¡rbol hasta donde 
-        sea necesario para mantener la propiedad de montÃ­culo.
+        Infiltra un Ã­tem hacia arriba en el Árbol hasta donde 
+        sea necesario para mantener la propiedad de montá­culo.
 
         Parameters
         ----------
         i : int
-            TamaÃ±o del MontÃ­culo.
+            Tamaño del Montí­culo.
 
         Returns
         -------
@@ -73,13 +73,13 @@ class MonticuloBinario:
     
     def insertar(self, k):
         '''
-        Recibe un Ã­tem como parÃ¡metro, lo inserta en el MontÃ­culo y llama
-        al mÃ©todo "infilt_arriba".
+        Recibe un í­tem como parámetro, lo inserta en el Montí­culo y llama
+        al método "infilt_arriba".
 
         Parameters
         ----------
         k : int
-            Ãtem que se inserta en el MontÃ­culo.
+            Ítem que se inserta en el Montí­culo.
 
         Returns
         -------
@@ -93,13 +93,13 @@ class MonticuloBinario:
     
     def infilt_abajo(self, i):
         '''
-        Infiltra un Ã­tem hacia abajo en el Ã¡rbol hasta donde 
-        sea necesario para mantener la propiedad de montÃ­culo.
+        Infiltra un Ítem hacia abajo en el Árbol hasta donde 
+        sea necesario para mantener la propiedad de montí­culo.
 
         Parameters
         ----------
         i : int
-            Hijo menor de la raÃ­z del MontÃ­culo.
+            Hijo menor de la raí­z del Montí­culo.
 
         Returns
         -------
@@ -117,7 +117,7 @@ class MonticuloBinario:
     
     def hijoMin(self, i):
         '''
-        Encuentra el Hijo mÃ­nimo de un Ã­tem.
+        Encuentra el Hijo mí­nimo de un í­tem.
 
         Parameters
         ----------
@@ -141,9 +141,9 @@ class MonticuloBinario:
     
     def eliminar_min(self):
         '''
-        Elimina el valor mÃ­nimo del MontÃ­culo.
+        Elimina el valor mí­nimo del Montí­culo.
         Gran parte del proceso se realiza 
-        cuando se llama al mÃ©todo: "infilt_abajo"
+        cuando se llama al método: "infilt_abajo"
 
         Returns
         -------
@@ -158,10 +158,41 @@ class MonticuloBinario:
         self.infilt_abajo(1)
         
         return valorSacado
+    
+    
+    # Método implementado para realizar pruebas locales
+    def construir_monticulo(self, unaLista):
+        '''
+        Construye un Montículo completo a partir de una lista de claves.
+
+        Parameters
+        ----------
+        unaLista : list
+            Lista de claves para crear el Montículo.
+
+        Returns
+        -------
+        None.
+
+        '''
+        i = len(unaLista) // 2
+        self.tamanoActual = len(unaLista)
+        self.listaMonticulo = [0] + unaLista[:]
+        while (i > 0):
+            self.infilt_abajo(i)
+            i = i - 1
 
 
 
 # Pruebas locales
 
 if __name__ == '__main__':
-    None    
+    
+    miMonticulo = MonticuloBinario()
+    miMonticulo.construir_monticulo([9,5,6,2,3])
+    
+    print(miMonticulo.eliminar_min())
+    print(miMonticulo.eliminar_min())
+    print(miMonticulo.eliminar_min())
+    print(miMonticulo.eliminar_min())
+    print(miMonticulo.eliminar_min())
