@@ -62,17 +62,17 @@ class ColaPrioridad:
 
         '''
         while i // 2 > 0:
-          if self.listaMonticulo[i] < self.listaMonticulo[i // 2]:
+          if self.listaMonticulo[i][0] < self.listaMonticulo[i // 2]:
              temp = self.listaMonticulo[i // 2]
              self.listaMonticulo[i // 2] = self.listaMonticulo[i]
              self.listaMonticulo[i] = temp
           i = i // 2
     
     
-    def insertar(self, k):
+    def insertar(self, k:tuple):
         '''
-        Recibe un í­tem como parámetro, lo inserta en el Montí­culo y llama
-        al método "infilt_arriba".
+        Recibe un í­tem como parámetro, lo inserta en la Cola de Prioridad
+        y llama al método "infilt_arriba".
 
         Parameters
         ----------
@@ -156,9 +156,7 @@ class ColaPrioridad:
         self.infilt_abajo(1)
         
         return valorSacado
-    
-    
-    # Método implementado para realizar pruebas locales
+
     def construir_monticulo(self, unaLista):
         '''
         Construye una Cola de Prioridad completa 

@@ -1,10 +1,28 @@
+# Ponderación es el peso de la arista, es fijo
+# Dist varía, es la acumulacion del as aristas
 
 class Vertice:
     def __init__(self, clave):
         self.id = clave
         self.conectadoA = {}
+        self.dist = 0
 
     def agregarVecino(self, vecino, ponderacion=0):
+        '''
+        Setter de la ponderacion de un vecino.
+
+        Parameters
+        ----------
+        vecino : int
+            Índice donde se va a insertar la ponderacion del vecino.
+        ponderacion : int, optional
+            Ponderación del vecino. El valor por defecto es 0.
+
+        Returns
+        -------
+        None.
+
+        '''
         self.conectadoA[vecino] = ponderacion
 
     def __str__(self):
@@ -14,10 +32,49 @@ class Vertice:
         return self.conectadoA.keys()
 
     def obtenerId(self):
+        '''
+        Getter de clave.
+
+        Returns
+        -------
+        any type
+            Clave del Nodo Actual.
+
+        '''
         return self.id
 
     def obtenerPonderacion(self, vecino):
+        '''
+        Getter de Ponderacion.
+        Peso de la arista.
+
+        Parameters
+        ----------
+        vecino : int
+            Índice del Vecino.
+
+        Returns
+        -------
+        int
+            Ponderación del vecino.
+
+        '''
         return self.conectadoA[vecino]
+    
+    def obtener_distancia(self):
+        '''
+        Getter de dist.
+
+        Returns
+        -------
+        int
+            Distancia del vertice.
+
+        '''
+        return self.dist
+    
+    def asignar_distancia(self, nuevaDistancia):
+    
     
 
 class Grafo:
