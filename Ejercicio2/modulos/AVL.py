@@ -231,6 +231,40 @@ class AVL:
             else:
                     nodoActual.hijoDerecho = NodoArbol(clave, valor, padre=nodoActual)
                     self.actualizar_equilibrio(nodoActual.hijoDerecho)
+    
+    def rotar_izquierda(self,rotRaiz):
+        nuevaRaiz = rotRaiz.hijoDerecho
+        rotRaiz.hijoDerecho = nuevaRaiz.hijoIzquierdo
+        if nuevaRaiz.hijoIzquierdo != None:
+            nuevaRaiz.hijoIzquierdo.padre = rotRaiz
+        nuevaRaiz.padre = rotRaiz.padre
+        if rotRaiz.es_raiz():
+            self.raiz = nuevaRaiz
+        else:
+            if rotRaiz.es_hijo_izquierdo():
+                    rotRaiz.padre.hijoIzquierdo = nuevaRaiz
+            else:
+                rotRaiz.padre.hijoDerecho = nuevaRaiz
+        nuevaRaiz.hijoIzquierdo = rotRaiz
+        rotRaiz.padre = nuevaRaiz
+        rotRaiz.factorEquilibrio = rotRaiz.factorEquilibrio + 1 - min(nuevaRaiz.factorEquilibrio, 0)
+        nuevaRaiz.factorEquilibrio = nuevaRaiz.factorEquilibrio + 1 + max(rotRaiz.factorEquilibrio, 0)
+    
+    def rotar_derecha(self,rot_raiz):
+        nueva_raiz = rot_raiz.izq
+        rot_raiz.izq = nueva_raiz.der
+        if rot_raiz.padre!= None:
+          self.raiz=nueva_raiz
+        else:
+            if rot_raiz.es_izq():
+                rot_raiz.padre.izq = nueva_raiz
+            elif rot_raiz.es_der():
+                rot_raiz.padre.der = nueva_raiz
+        nueva_raiz.hijoIzquierdo = rot_raiz
+        rot_raiz.padre = nueva_raiz
+        rot_raiz.factorEquilibrio = rot_raiz.factorEquilibrio + 1 - min(0,nueva_raiz.factorEquilibrio)
+        nueva_raiz.factorEquilibrio = nueva_raiz.factorEquilibrio + 1 + max(0,rot_raiz.factorEquilibrio)
+    
 
     def actualizar_equilibrio(self, nodo):
         '''
@@ -250,7 +284,7 @@ class AVL:
             self.reequilibrar(nodo)
             return
         if nodo.padre != None:
-            if nodo.esHijoIzquierdo():
+            if nodo.es_hijo_izquierdo():
                     nodo.padre.factorEquilibrio += 1
             elif nodo.esHijoDerecho():
                     nodo.padre.factorEquilibrio -= 1
@@ -274,16 +308,16 @@ class AVL:
         '''
         if nodo.factorEquilibrio < 0:
                if nodo.hijoDerecho.factorEquilibrio > 0:
-                  self.rotarDerecha(nodo.hijoDerecho)
-                  self.rotarIzquierda(nodo)
+                  self.rotar_derecha(nodo.hijoDerecho)
+                  self.rotar_izquierda(nodo)
                else:
-                  self.rotarIzquierda(nodo)
+                  self.rotar_izquierda(nodo)
         elif nodo.factorEquilibrio > 0:
                if nodo.hijoIzquierdo.factorEquilibrio < 0:
-                  self.rotarIzquierda(nodo.hijoIzquierdo)
-                  self.rotarDerecha(nodo)
+                  self.rotar_izquierda(nodo.hijoIzquierdo)
+                  self.rotar_derecha(nodo)
                else:
-                  self.rotarDerecha(nodo)
+                  self.rotar_derecha(nodo)
     
     def __setitem__(self, c, v):
         '''
@@ -554,4 +588,19 @@ class AVL:
                                 nodoActual.hijoDerecho.cargaUtil,
                                 nodoActual.hijoDerecho.hijoIzquierdo,
                                 nodoActual.hijoDerecho.hijoDerecho)
+    
+class iterador:
+    def __init__(self,arbol,inicio):
+        self.inicio = arbol.obtener(inicio)
+        
+    def __next__(self):
+        nodosalida = self.inicio
+        self.inicio =self.arbol.encontrar_sucesor()
+        if self.inicio== None:
+            raise StopIteration
+        return nodosalida
+             
+    def __iter__(self):
+        return self
+             
             
