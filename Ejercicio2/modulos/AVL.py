@@ -136,6 +136,29 @@ class NodoArbol:
             self.hijoIzquierdo.padre = self
         if self.tiene_hijo_derecho():
             self.hijoDerecho.padre = self
+        
+    def encontrar_sucesor(self):
+            '''
+            
+
+            Returns
+            -------
+            suc : TYPE
+                DESCRIPTION.
+
+            '''
+            suc = None
+            if self.tiene_hijo_derecho():
+                suc = self.hijoDerecho.encontrar_min()
+            else:
+                if self.padre:
+                       if self.es_hijo_izquierdo():
+                           suc = self.padre
+                       else:
+                           self.padre.hijoDerecho = None
+                           suc = self.padre.encontrar_sucesor()
+                           self.padre.hijoDerecho = self
+            return suc
 
 
 
@@ -286,7 +309,7 @@ class AVL:
         if nodo.padre != None:
             if nodo.es_hijo_izquierdo():
                     nodo.padre.factorEquilibrio += 1
-            elif nodo.esHijoDerecho():
+            elif nodo.es_hijo_derecho():
                     nodo.padre.factorEquilibrio -= 1
     
             if nodo.padre.factorEquilibrio != 0:
@@ -500,28 +523,7 @@ class AVL:
                       self.padre.hijoDerecho = self.hijoDerecho
                    self.hijoDerecho.padre = self.padre
 
-    def encontrar_sucesor(self):
-        '''
-        
-
-        Returns
-        -------
-        suc : TYPE
-            DESCRIPTION.
-
-        '''
-        suc = None
-        if self.tiene_hijo_derecho():
-            suc = self.hijoDerecho.encontrar_min()
-        else:
-            if self.padre:
-                   if self.es_hijo_izquierdo():
-                       suc = self.padre
-                   else:
-                       self.padre.hijoDerecho = None
-                       suc = self.padre.encontrar_sucesor()
-                       self.padre.hijoDerecho = self
-        return suc
+   
 
     def encontrar_min(self):
         '''
@@ -589,13 +591,14 @@ class AVL:
                                 nodoActual.hijoDerecho.hijoIzquierdo,
                                 nodoActual.hijoDerecho.hijoDerecho)
     
-class iterador:
+class Iterador:
+    
     def __init__(self,arbol,inicio):
-        self.inicio = arbol.obtener(inicio)
+        self.inicio = arbol._obtener(inicio,arbol.raiz)
         
     def __next__(self):
         nodosalida = self.inicio
-        self.inicio =self.arbol.encontrar_sucesor()
+        self.inicio =self.inicio.encontrar_sucesor()
         if self.inicio== None:
             raise StopIteration
         return nodosalida
@@ -603,4 +606,22 @@ class iterador:
     def __iter__(self):
         return self
              
-            
+if __name__ == "__main__":
+    mediciones=AVL()
+    mediciones.agregar(26, 30)
+    mediciones.agregar(1, 30)
+    # mediciones.agregar("13/01/1998", 36)
+    # mediciones.agregar("27/09/1993", 30)
+    # mediciones.agregar("03/03/2000", 21)
+    # mediciones.agregar("29/06/2003", 15)
+    # print(mediciones.tamano)
+    # print(mediciones.raiz.clave)
+    # print()
+    print(mediciones._obtener(1, mediciones.raiz))
+    
+    # for nodo in mediciones:
+    #     print(nodo.clave)
+    
+    iterador= Iterador(mediciones,1)
+    for nodo in iterador:
+        print(nodo)

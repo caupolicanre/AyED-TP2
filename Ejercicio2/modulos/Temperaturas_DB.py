@@ -1,4 +1,4 @@
-from AVL import AVL
+import AVL
 from datetime import date, time, datetime
 
 class Temperaturas_DB:
@@ -9,6 +9,7 @@ class Temperaturas_DB:
     def trans_fecha(self,fecha):
         fecha=datetime.strptime(fecha, '%d/%m/%Y')
         return fecha
+    
     def guardar_temperatura(self, temperatura, fecha):
         self.arbol.agregar(fecha, temperatura)
     
@@ -18,11 +19,13 @@ class Temperaturas_DB:
     def max_temp_rango(self,fecha1, fecha2):
         date1=self.trans_fecha(fecha1)
         date2=self.trans_fecha(fecha2)
-        lista=[]
-        if date1<date2:
-            for i in self.arbol:
-                if date1<=i<=date2:
-                   lista.append(self.arbol.obtener(i))             
+        max_temp = 0
+        iterador=self.Iterador(self.arbol,date1)
+        for nodo in iterador:
+            if date1<=nodo<=date2:
+                if self.obtener(nodo)>max_temp:
+                    max_temp= self.obtener(nodo)
+        return max_temp
                     
         
         
