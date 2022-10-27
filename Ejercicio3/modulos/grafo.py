@@ -6,6 +6,7 @@ class Vertice:
         self.id = clave
         self.conectadoA = {}
         self.dist = 0
+        self.predecesor = None
 
     def agregarVecino(self, vecino, ponderacion=0):
         '''
@@ -26,6 +27,15 @@ class Vertice:
         self.conectadoA[vecino] = ponderacion
 
     def __str__(self):
+        '''
+        Retorna la ciudad, y las ciudades a las que está conectada.
+
+        Returns
+        -------
+        str
+            String con los datos del vértice.
+
+        '''
         return str(self.id) + ' conectadoA: ' + str([x.id for x in self.conectadoA])
 
     def obtenerConexiones(self):
@@ -61,7 +71,7 @@ class Vertice:
         '''
         return self.conectadoA[vecino]
     
-    def obtener_distancia(self):
+    def obtenerDistancia(self):
         '''
         Getter de dist.
 
@@ -73,14 +83,46 @@ class Vertice:
         '''
         return self.dist
     
-    def asignar_distancia(self, nuevaDistancia):
+    def asignarDistancia(self, nuevaDistancia):
+        '''
+        Setter de dist.
+
+        Parameters
+        ----------
+        nuevaDistancia : int
+            Distancia que va a reemplazar la actual.
+
+        Returns
+        -------
+        None.
+
+        '''
+        self.dist = nuevaDistancia
     
+    def asignarPredecesor(self, predecesor):
+        '''
+        Setter de predecesor.
+
+        Parameters
+        ----------
+        predecesor : reference
+            Predecesor del vértice.
+
+        Returns
+        -------
+        None.
+
+        '''
+        self.predecesor = predecesor
     
 
 class Grafo:
     def __init__(self):
         self.listaVertices = {}
         self.numVertices = 0
+
+    def __getitem__(self, clave):
+        return self.obtenerVertice(clave)
 
     def agregarVertice(self, clave):
         self.numVertices = self.numVertices + 1
