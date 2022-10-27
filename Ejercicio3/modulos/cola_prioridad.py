@@ -2,7 +2,7 @@
 class ColaPrioridad:
     
     def __init__(self):
-        self.listaMonticulo = ['']
+        self.listaMonticulo = [(0,0)]
         self.tamanoActual = 0
         self.hijoMin
         
@@ -43,10 +43,18 @@ class ColaPrioridad:
         '''
         return str(self.listaMonticulo)
     
+    def __contains__(self, vertice):
+        for par in self.listaMonticulo:
+            if par[1] == vertice:
+                return True
+            return False
     
     # Métodos
     
-    def infilt_arriba(self, i):
+    def estaVacia(self):
+        return self.tamanoActual == 0
+    
+    def infiltArriba(self, i):
         '''
         Infiltra un Í­tem hacia arriba en el Árbol hasta donde 
         sea necesario para mantener la propiedad de montí­culo.
@@ -72,7 +80,7 @@ class ColaPrioridad:
     def insertar(self, k:tuple):
         '''
         Recibe un í­tem como parámetro, lo inserta en la Cola de Prioridad
-        y llama al método "infilt_arriba".
+        y llama al método "infiltArriba".
 
         Parameters
         ----------
@@ -86,10 +94,10 @@ class ColaPrioridad:
         '''
         self.listaMonticulo.append(k)
         self.tamanoActual = self.tamanoActual + 1
-        self.infilt_arriba(self.tamanoActual)
+        self.infiltArriba(self.tamanoActual)
     
     
-    def infilt_abajo(self, i):
+    def infiltAbajo(self, i):
         '''
         Infiltra un Ítem hacia abajo en el Árbol hasta donde 
         sea necesario para mantener la propiedad de montí­culo.
@@ -137,11 +145,11 @@ class ColaPrioridad:
                 return i * 2 + 1
     
     
-    def eliminar_min(self):
+    def eliminarMin(self):
         '''
         Elimina el valor mí­nimo de la Cola de Prioridad.
         Gran parte del proceso se realiza 
-        cuando se llama al método: "infilt_abajo"
+        cuando se llama al método: "infiltAbajo"
 
         Returns
         -------
@@ -149,15 +157,35 @@ class ColaPrioridad:
             Valor mínimo de la Cola de Prioridad extraído.
 
         '''
-        valorSacado = self.listaMonticulo[1]
+        valorSacado = self.listaMonticulo[1][1]
         self.listaMonticulo[1] = self.listaMonticulo[self.tamanoActual]
         self.tamanoActual = self.tamanoActual - 1
         self.listaMonticulo.pop()
-        self.infilt_abajo(1)
+        self.infiltAbajo(1)
         
         return valorSacado
+    
+    def devolverMinimo(self):
+        return self.listaMonticulo[1][1]
+    
+    def decrementarClave(self, valor, nuevaClave):
+        hecho = False
+        i = 1
+        clave = 0
+        
+        '''Busco cada valor (Vertice)'''
+        while not hecho and i <= self.tamanoActual:
+            if self.listaMonticulo[i][1] == valor:
+                hecho = True
+                clave = i
+            else:
+                i = i + 1
+        
+        if clave > 0:
+            self.listaMonticulo[clave] = (nuevaClave, self.listaMonticulo[clave][1])
+            self.infiltArriba(clave)
 
-    def construir_monticulo(self, unaLista):
+    def construirMonticulo(self, unaLista):
         '''
         Construye una Cola de Prioridad completa 
         a partir de una lista de claves.
@@ -176,7 +204,7 @@ class ColaPrioridad:
         self.tamanoActual = len(unaLista)
         self.listaMonticulo = [0] + unaLista[:]
         while (i > 0):
-            self.infilt_abajo(i)
+            self.infiltAbajo(i)
             i = i - 1
 
 
@@ -186,10 +214,10 @@ class ColaPrioridad:
 if __name__ == '__main__':
     
     miColaPrioridad = ColaPrioridad()
-    miColaPrioridad.construir_monticulo([9,5,6,2,3])
+    miColaPrioridad.construirMonticulo([9,5,6,2,3])
     
-    print(miColaPrioridad.eliminar_min())
-    print(miColaPrioridad.eliminar_min())
-    print(miColaPrioridad.eliminar_min())
-    print(miColaPrioridad.eliminar_min())
-    print(miColaPrioridad.eliminar_min())
+    print(miColaPrioridad.eliminarMin())
+    print(miColaPrioridad.eliminarMin())
+    print(miColaPrioridad.eliminarMin())
+    print(miColaPrioridad.eliminarMin())
+    print(miColaPrioridad.eliminarMin())
