@@ -9,21 +9,6 @@ class Vertice:
         self.predecesor = None
 
     def agregarVecino(self, vecino, ponderacion=0):
-        '''
-        Setter de la ponderacion de un vecino.
-
-        Parameters
-        ----------
-        vecino : int
-            Índice donde se va a insertar la ponderacion del vecino.
-        ponderacion : int, optional
-            Ponderación del vecino. El valor por defecto es 0.
-
-        Returns
-        -------
-        None.
-
-        '''
         self.conectadoA[vecino] = ponderacion
 
     def __str__(self):
@@ -56,18 +41,7 @@ class Vertice:
     def obtenerPonderacion(self, vecino):
         '''
         Getter de Ponderacion.
-        Peso de la arista.
-
-        Parameters
-        ----------
-        vecino : int
-            Índice del Vecino.
-
-        Returns
-        -------
-        int
-            Ponderación del vecino.
-
+        Peso/Costo de la arista.
         '''
         return self.conectadoA[vecino]
     
@@ -91,27 +65,12 @@ class Vertice:
         ----------
         nuevaDistancia : int
             Distancia que va a reemplazar la actual.
-
-        Returns
-        -------
-        None.
-
         '''
         self.dist = nuevaDistancia
     
     def asignarPredecesor(self, predecesor):
         '''
         Setter de predecesor.
-
-        Parameters
-        ----------
-        predecesor : reference
-            Predecesor del vértice.
-
-        Returns
-        -------
-        None.
-
         '''
         self.predecesor = predecesor
     
@@ -140,14 +99,38 @@ class Grafo:
         return n in self.listaVertices
 
     def agregarArista(self, de, a, costo=0):
+        '''
+        Genera una nueva arista de un Vértice a otro.
+        Si alguno de los Vértices no existe, los crea,
+        y luego los conecta.
+
+        Parameters
+        ----------
+        de : Vertice()
+            Vértice inicial.
+        a : Vertice()
+            Vecino del vértice inicial.
+        costo : int, optional
+            Cosot (Peso) que tiene la Arista. Por defecto es 0.
+
+        Returns
+        -------
+        None.
+
+        '''
         if de not in self.listaVertices:
+            '''Si el primer Vértice no existe, lo crea'''
             nv = self.agregarVertice(de)
+            
         if a not in self.listaVertices:
+            '''Si el segundo Vértice no existe, lo crea'''
             nv = self.agregarVertice(a)
+            
         self.listaVertices[de].agregarVecino(self.listaVertices[a], costo)
 
     def obtenerVertices(self):
         return self.listaVertices.keys()
 
     def __iter__(self):
+        '''Método para iterar el Grafo.'''
         return iter(self.listaVertices.values())
