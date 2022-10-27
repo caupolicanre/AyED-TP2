@@ -4,7 +4,7 @@ class ColaPrioridad:
     def __init__(self):
         self.listaMonticulo = [(0,0)]
         self.tamanoActual = 0
-        self.hijoMin
+        self.hijoMax
         
         
     # Métodos Mágicos
@@ -70,7 +70,7 @@ class ColaPrioridad:
 
         '''
         while i // 2 > 0:
-          if self.listaMonticulo[i][0] < self.listaMonticulo[i // 2]:
+          if self.listaMonticulo[i][0] > self.listaMonticulo[i // 2]:
              temp = self.listaMonticulo[i // 2]
              self.listaMonticulo[i // 2] = self.listaMonticulo[i]
              self.listaMonticulo[i] = temp
@@ -113,17 +113,17 @@ class ColaPrioridad:
 
         '''
         while (i * 2) <= self.tamanoActual:
-            hm = self.hijoMin(i)    # Hijo 
-            if self.listaMonticulo[i] > self.listaMonticulo[hm]:
+            hm = self.hijoMax(i)    # Hijo 
+            if self.listaMonticulo[i] < self.listaMonticulo[hm]:
                 temp = self.listaMonticulo[i]
                 self.listaMonticulo[i] = self.listaMonticulo[hm]
                 self.listaMonticulo[hm] = temp
             i = hm
     
     
-    def hijoMin(self, i):
+    def hijoMax(self, i):
         '''
-        Encuentra el Hijo mí­nimo de un í­tem.
+        Encuentra el Hijo máximo de un í­tem.
 
         Parameters
         ----------
@@ -133,28 +133,28 @@ class ColaPrioridad:
         Returns
         -------
         int
-            Retorna el índice donde se encuentra el hijo mínimo.
+            Retorna el índice donde se encuentra el hijo máximo.
 
         '''
         if i * 2 + 1 > self.tamanoActual:
             return i * 2
         else:
-            if self.listaMonticulo[i*2] < self.listaMonticulo[i*2+1]:
+            if self.listaMonticulo[i*2] > self.listaMonticulo[i*2+1]:
                 return i * 2
             else:
                 return i * 2 + 1
     
     
-    def eliminarMin(self):
+    def eliminarMax(self):
         '''
-        Elimina el valor mí­nimo de la Cola de Prioridad.
+        Elimina el valor máximo de la Cola de Prioridad.
         Gran parte del proceso se realiza 
         cuando se llama al método: "infiltAbajo"
 
         Returns
         -------
         valorSacado : any type
-            Valor mínimo de la Cola de Prioridad extraído.
+            Valor máximo de la Cola de Prioridad extraído.
 
         '''
         valorSacado = self.listaMonticulo[1][1]
