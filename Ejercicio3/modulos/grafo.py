@@ -8,9 +8,6 @@ class Vertice:
         self.dist = 0
         self.predecesor = None
 
-    def agregarVecino(self, vecino, ponderacion=0):
-        self.conectadoA[vecino] = ponderacion
-
     def __str__(self):
         '''
         Retorna la ciudad, y las ciudades a las que está conectada.
@@ -22,6 +19,15 @@ class Vertice:
 
         '''
         return str(self.id) + ' conectadoA: ' + str([x.id for x in self.conectadoA])
+
+    def __lt__(self, other):
+        return True
+    
+    def __gt__(self, other):
+        return True
+
+    def agregarVecino(self, vecino, ponderacion=0):
+        self.conectadoA[vecino] = ponderacion
 
     def obtenerConexiones(self):
         return self.conectadoA.keys()
