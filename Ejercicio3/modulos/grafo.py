@@ -3,9 +3,9 @@
 
 class Vertice:
     def __init__(self, clave):
-        self.id = clave
-        self.conectadoA = {}
-        self.dist = 0
+        self.clave = clave      # Nombre de la ciudad
+        self.conectadoA = {}    # Ciudades a las que está conectada
+        self.dist = 0           # Distancia que está en la arista que conecta el predecesor con el vertice actual.
         self.predecesor = None
 
     def __str__(self):
@@ -18,13 +18,7 @@ class Vertice:
             String con los datos del vértice.
 
         '''
-        return str(self.id) + ' conectadoA: ' + str([x.id for x in self.conectadoA])
-
-    def __lt__(self, other):
-        return True
-    
-    def __gt__(self, other):
-        return True
+        return str(self.clave) + ' conectadoA: ' + str([x.id for x in self.conectadoA])
 
     def agregarVecino(self, vecino, ponderacion=0):
         self.conectadoA[vecino] = ponderacion
@@ -42,7 +36,7 @@ class Vertice:
             Clave del Nodo Actual.
 
         '''
-        return self.id
+        return self.clave
 
     def obtenerPonderacion(self, vecino):
         '''
@@ -84,7 +78,7 @@ class Vertice:
 class Grafo:
     def __init__(self):
         self.listaVertices = {}
-        self.numVertices = 0
+        self.numVertices = 0    # Contador de Vértices
 
     def __getitem__(self, clave):
         return self.obtenerVertice(clave)
@@ -117,7 +111,7 @@ class Grafo:
         a : Vertice()
             Vecino del vértice inicial.
         costo : int, optional
-            Cosot (Peso) que tiene la Arista. Por defecto es 0.
+            Costo (Peso) que tiene la Arista. Por defecto es 0.
 
         Returns
         -------
@@ -131,10 +125,17 @@ class Grafo:
         if a not in self.listaVertices:
             '''Si el segundo Vértice no existe, lo crea'''
             nv = self.agregarVertice(a)
-            
+        
+        '''
+        Agrega al segundo Vértice como vecino del primer Vértice,
+        Creando una arista con la ponderación
+        '''
         self.listaVertices[de].agregarVecino(self.listaVertices[a], costo)
 
     def obtenerVertices(self):
+        '''
+        Retorna todos los vertices del Grafo
+        '''
         return self.listaVertices.keys()
 
     def __iter__(self):
