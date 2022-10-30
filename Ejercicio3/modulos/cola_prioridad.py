@@ -90,7 +90,7 @@ class ColaPrioridadMax:
           i = i // 2
     
     
-    def insertar(self, k:tuple):
+    def insertar(self, k):
         '''
         Recibe un í­tem como parámetro, lo inserta en la Cola de Prioridad
         y llama al método "infiltArriba".
@@ -141,7 +141,7 @@ class ColaPrioridadMax:
         Parameters
         ----------
         i : int
-            Índice.
+            Posición del padre.
 
         Returns
         -------

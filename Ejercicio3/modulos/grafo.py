@@ -26,7 +26,7 @@ class Vertice:
     def obtenerConexiones(self):
         return self.conectadoA.keys()
 
-    def obtenerId(self):
+    def obtenerClave(self):
         '''
         Getter de clave.
 
@@ -73,6 +73,18 @@ class Vertice:
         Setter de predecesor.
         '''
         self.predecesor = predecesor
+    
+    def obtenerPredecesor(self):
+        '''
+        Getter de predecesor.
+
+        Returns
+        -------
+        reference
+            Vértice predecesor del Vértice actual.
+
+        '''
+        return self.predecesor
     
 
 class Grafo:
