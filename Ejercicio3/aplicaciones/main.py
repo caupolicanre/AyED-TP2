@@ -1,13 +1,10 @@
-import csv
-from Ejercicio3.modulos.grafo import Grafo, Vertice
-from Ejercicio3.modulos.cola_prioridad import ColaPrioridad
-from Ejercicio3.modulos.algoritmos_dijkstra import dijkstra_modificado
+from procesamiento import evaluar_opciones_de_transporte
 
-grafoRutas = Grafo()
+ciudadInicial = input("Ingrese la ciudad inicial: ")
+ciudadDestino = input("Ingrese la ciudad destino: ")
 
-with open("rutas.txt" + 'r') as rutas:
-    lector = csv.reader(rutas, delimiter=",")
-    for linea in lector:
-        grafoRutas.agregarArista(linea[0], linea[1], int(linea[2]))
+mayor_cuello_de_botella, menor_precio, ruta = evaluar_opciones_de_transporte(ciudadInicial, ciudadDestino)
 
-dijkstra_modificado(grafoRutas, inicio = grafoRutas)
+print(f"\nPara ir de {ciudadInicial} a {ciudadDestino}, seguir esta ruta:\n{ruta}")
+print(f"Mayor cuello de botella: {mayor_cuello_de_botella}")
+print(f"Menor precio: {menor_precio}")
