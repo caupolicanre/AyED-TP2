@@ -4,7 +4,7 @@ save_data_on_exit = True
 save_history = True
 save_non_project_files = False
 project_type = 'empty-project-type'
-recent_files = ['Ejercicio3\\modulos\\cola_prioridad.py', 'Ejercicio3\\modulos\\dijkstra.py', 'Ejercicio3\\modulos\\grafo.py']
+recent_files = ['Ejercicio3\\modulos\\cola_prioridad.py', 'Ejercicio3\\modulos\\grafo.py', 'Ejercicio3\\modulos\\algoritmos_dijkstra.py', 'Ejercicio3\\aplicaciones\\main.py', 'Ejercicio3\\aplicaciones\\rutas.txt']
 
 [main]
 version = 0.2.0
