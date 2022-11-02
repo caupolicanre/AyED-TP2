@@ -8,5 +8,5 @@ recent_files = ['Ejercicio2\\modulos\\AVL.py', 'Ejercicio2\\modulos\\Temperatura
 
 [main]
 version = 0.2.0
-recent_files = []
+recent_files = ['Ejercicio2\\modulos\\Temperaturas_DB.py']
 
