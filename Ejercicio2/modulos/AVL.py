@@ -1,5 +1,6 @@
 from datetime import date
-class NodoArbol:
+class Nodo_arbol:
+   
     def __init__(self, clave, valor, izquierdo=None, derecho=None, padre=None):
         self.clave = clave
         self.carga_util = valor
@@ -8,11 +9,13 @@ class NodoArbol:
         self.padre = padre
         self.factor_equilibrio = 0
         
+        
     def __str__(self):
         lista=[]
         for nodo in self.mediciones:
             lista.append([(nodo.clave.date()), nodo.carga_util])
         return str(lista)
+    
 
     def tiene_hijo_izquierdo(self):
         '''
@@ -25,6 +28,7 @@ class NodoArbol:
 
         '''
         return self.hijo_izquierdo
+    
 
     def tiene_hijo_derecho(self):
         '''
@@ -37,6 +41,7 @@ class NodoArbol:
 
         '''
         return self.hijo_derecho
+    
 
     def es_hijo_izquierdo(self):
         '''
@@ -50,6 +55,7 @@ class NodoArbol:
 
         '''
         return self.padre and self.padre.hijo_izquierdo == self
+    
 
     def es_hijo_derecho(self):
         '''
@@ -63,6 +69,7 @@ class NodoArbol:
 
         '''
         return self.padre and self.padre.hijo_derecho == self
+    
 
     def es_raiz(self):
         '''
@@ -75,6 +82,7 @@ class NodoArbol:
 
         '''
         return not self.padre
+    
 
     def es_hoja(self):
         '''
@@ -87,6 +95,7 @@ class NodoArbol:
 
         '''
         return not (self.hijo_derecho or self.hijo_izquierdo)
+    
 
     def tiene_algun_hijo(self):
         '''
@@ -99,6 +108,7 @@ class NodoArbol:
 
         '''
         return self.hijo_derecho or self.hijo_izquierdo
+    
 
     def tiene_ambos_hijos(self):
         '''
@@ -111,6 +121,7 @@ class NodoArbol:
 
         '''
         return self.hijo_derecho and self.hijo_izquierdo
+    
 
     def reemplazar_dato_de_nodo(self, clave, valor, hizq, hder):
         '''
@@ -151,30 +162,40 @@ class NodoArbol:
 
             Returns
             -------
-            suc : TYPE
-                DESCRIPTION.
+            suc : Nodo
 
             '''
             suc = None
             if self.tiene_hijo_derecho():
+                '''
+                Si el nodo tiene un hijo derecho, el sucesor es la clave más pequeña en el subárbol derecho.
+                '''
                 suc = self.hijo_derecho.encontrar_min()
             else:
                 if self.padre:
                        if self.es_hijo_izquierdo():
+                           '''
+                           Si el nodo no tiene hijo derecho y es el hijo izquierdo de su padre, el padre es el sucesor.
+                           '''
                            suc = self.padre
                        else:
+                           '''
+                           Si el nodo es el hijo derecho de su padre, y no tiene hijo derecho, 
+                           entonces el sucesor de este nodo es el sucesor de su padre, excluyendo este nodo.
+                           '''
                            self.padre.hijo_derecho = None
                            suc = self.padre.encontrar_sucesor()
                            self.padre.hijo_derecho = self
             return suc
+        
 
     def encontrar_min(self):
         '''
-        
+        Toma el hijo del nodo de un nodo repetitivamente hasta que el nodo en el que esta no tenga hijo izquierdo
 
         Returns
         -------
-        actual : TYPE
+        actual : Nodo_Arbol
             DESCRIPTION.
 
         '''
@@ -183,9 +204,10 @@ class NodoArbol:
             actual = actual.hijo_izquierdo
         return actual
     
+    
     def empalmar(self):
         '''
-        
+        Elimina el sucesor del nodo
 
         Returns
         -------
@@ -194,10 +216,19 @@ class NodoArbol:
         '''
         if self.es_hoja():
             if self.es_hijo_izquierdo():
-                   self.padre.hijo_izquierdo = None
+                '''
+                Si el nodo es hoja y a su vez es hijo izquierdo el padre de este nodo va a ser None
+                '''
+                self.padre.hijo_izquierdo = None
             else:
-                   self.padre.hijo_derecho = None
+                '''
+                Hace None al padre
+                '''
+                self.padre.hijo_derecho = None
         elif self.tiene_algun_hijo():
+            '''
+            Si el nodo tiene un hijo transforma conecta a su nodo hijo derecho o izquierdo con su nodo padre
+            '''
             if self.tiene_hijo_izquierdo():
                    if self.es_hijo_izquierdo():
                       self.padre.hijo_izquierdo = self.hijo_izquierdo
@@ -217,19 +248,24 @@ class AVL:
     def __init__(self):
         self.raiz = None
         self.tamano = 0     # Contador del tamaño del Árbol
-
-    def longitud(self):
+        
+    
+    def __getitem__(self, clave):
         '''
-        Retorna la longitud del Árbol.
+       Llama al metodo "obtener"
+        Parameters
+        ----------
+        clave : Any type
 
         Returns
         -------
-        int
-            Entero que representa el tamaño del árbol.
+        Any type
+            Devuelve el valor almacenado en la carga util del nodo 
 
         '''
-        return self.tamano
-
+        return self.obtener(clave)
+    
+    
     def __len__(self):
         '''
         Método mágico que retorna el tamaño del Árbol.
@@ -241,6 +277,75 @@ class AVL:
 
         '''
         return self.tamano
+    
+    
+    def __setitem__(self, c, v):
+        '''
+        Llama al método "agregar".
+
+        Parameters
+        ----------
+        c : Clave del Nodo, en este caso es la fecha
+        v : Valor almacenado en el nodo, en este caso es la temperatura
+
+        Returns
+        -------
+        None.
+
+        '''
+        self.agregar(c, v)
+        
+        
+    def __contains__(self, clave):
+        '''
+        Llama al metodo "obtener".
+
+        Parameters
+        ----------
+        clave : Date
+                Fecha en formato Date.
+
+        Returns
+        -------
+        bool
+            Devuelve True si "obtener" devuelve un valor o False si devuelve None.
+
+        '''
+        if self._obtener(clave, self.raiz):
+            return True
+        else:
+            return False
+        
+        
+    def __delitem__(self, clave):
+        '''
+        Llama al metodo "eliminar"
+
+        Parameters
+        ----------
+        clave : Date
+                Fecha en formato Date.
+
+        Returns
+        -------
+        None.
+
+        '''
+        self.eliminar(clave)
+        
+    
+    def longitud(self):
+        '''
+        Retorna la longitud del Árbol.
+
+        Returns
+        -------
+        int
+            Entero que representa el tamaño del árbol.
+
+        '''
+        return self.tamano
+    
 
     def agregar(self, clave, valor):
         '''
@@ -250,9 +355,9 @@ class AVL:
 
         Parameters
         ----------
-        clave : any type
+        clave : 
             Clave del Nodo a agregar.
-        valor : any type
+        valor : 
             Carga útil que contiene el Nodo a agregar.
 
         Returns
@@ -270,22 +375,24 @@ class AVL:
             '''
             El Árbol no tiene raíz (Está vacío).
             '''
-            self.raiz = NodoArbol(clave, valor) # Crea un nuevo Nodo y actualiza la raíz con éste
+            self.raiz = Nodo_arbol(clave, valor) # Crea un nuevo Nodo y actualiza la raíz con éste
         
         self.tamano = self.tamano + 1   # Aumento el tamaño del árbol
+        
 
     def _agregar(self, clave, valor, nodo_actual):
         '''
-        
+        Mientras busca compara la clave recibida con la clave del nodo actual y las compara
+        dependiendo de el resultado de la comparacion es donde se va a agregar el nuevo nodo
 
         Parameters
         ----------
-        clave : any ype
+        clave : 
             Clave del Nodo a agregar.
-        valor : TYPE
+        valor : 
             Carga útil que contiene el Nodo a agregar.
-        nodo_actual : TYPE
-            DESCRIPTION.
+        nodo_actual : 
+            Posicion en la que se va a agrega el nuevo nodo
 
         Returns
         -------
@@ -293,17 +400,30 @@ class AVL:
 
         '''
         if clave < nodo_actual.clave:
+            '''
+            Si la nueva clave es menor que el nodo actual, buscar en el subárbol izquierdo.
+            '''
             if nodo_actual.tiene_hijo_izquierdo():
                     self._agregar(clave, valor, nodo_actual.hijo_izquierdo)
             else:
-                    nodo_actual.hijo_izquierdo = NodoArbol(clave, valor, padre=nodo_actual)
-                    self.actualizar_equilibrio(nodo_actual.hijo_izquierdo)
+                '''
+                Crea un nuevo nodo y lo inserta en la posicion actual
+                '''
+                nodo_actual.hijo_izquierdo = Nodo_arbol(clave, valor, padre=nodo_actual)
+                self.actualizar_equilibrio(nodo_actual.hijo_izquierdo)
         else:
+            '''
+            Si la nueva clave es mayor que el nodo actual, buscar en el subárbol derecho.
+            '''
             if nodo_actual.tiene_hijo_derecho():
                     self._agregar(clave, valor, nodo_actual.hijo_derecho)
             else:
-                    nodo_actual.hijo_derecho = NodoArbol(clave, valor, padre=nodo_actual)
-                    self.actualizar_equilibrio(nodo_actual.hijo_derecho)
+                '''
+                Crea un nuevo nodo y lo inserta en la posicion actual
+                '''
+                nodo_actual.hijo_derecho = Nodo_arbol(clave, valor, padre=nodo_actual)
+                self.actualizar_equilibrio(nodo_actual.hijo_derecho)
+    
     
     def rotar_izquierda(self, rot_raiz):
         nueva_raiz = rot_raiz.hijo_derecho
@@ -322,6 +442,7 @@ class AVL:
         rot_raiz.padre = nueva_raiz
         rot_raiz.factor_equilibrio = rot_raiz.factor_equilibrio + 1 - min(nueva_raiz.factor_equilibrio, 0)
         nueva_raiz.factor_equilibrio = nueva_raiz.factor_equilibrio + 1 + max(rot_raiz.factor_equilibrio, 0)
+    
     
     def rotar_derecha(self, rot_raiz):
         nueva_raiz = rot_raiz.hijo_izquierdo
@@ -342,12 +463,11 @@ class AVL:
 
     def actualizar_equilibrio(self, nodo):
         '''
-        
+        Comprueba si el nodo actual está lo suficientemente desequilibrado como para requerir el reequilibrio.
 
         Parameters
         ----------
-        nodo : TYPE
-            DESCRIPTION.
+        nodo : Nodo_arbol
 
         Returns
         -------
@@ -365,15 +485,14 @@ class AVL:
     
             if nodo.padre.factor_equilibrio != 0:
                     self.actualizar_equilibrio(nodo.padre)
+                    
     
     def reequilibrar(self,nodo):
         '''
-        
 
         Parameters
         ----------
-        nodo : TYPE
-            DESCRIPTION.
+        nodo : Nodo_arbol
 
         Returns
         -------
@@ -393,38 +512,11 @@ class AVL:
                else:
                   self.rotar_derecha(nodo)
     
-    def __setitem__(self, c, v):
-        '''
-        Llama al método "agregar".
-
-        Parameters
-        ----------
-        c : TYPE
-            DESCRIPTION.
-        v : TYPE
-            DESCRIPTION.
-
-        Returns
-        -------
-        None.
-
-        '''
-        self.agregar(c, v)
-
+   
     def obtener(self, clave):
         '''
-        
-
-        Parameters
-        ----------
-        clave : TYPE
-            DESCRIPTION.
-
-        Returns
-        -------
-        TYPE
-            DESCRIPTION.
-
+        Recorre el arbol en forma recursiva hasta que llega a un nodo hoja no coincidente 
+        o encuentra la clave recibida y devuelve el valor guardado en la carga util del nodo
         '''
         if self.raiz:
             res = self._obtener(clave, self.raiz)
@@ -434,22 +526,22 @@ class AVL:
                    return None
         else:
             return None
+        
 
     def _obtener(self, clave, nodo_actual):
         '''
-        
+        Llama al método "agregar".
 
         Parameters
         ----------
-        clave : TYPE
-            DESCRIPTION.
-        nodo_actual : TYPE
-            DESCRIPTION.
+        c : Date
+            Clave del Nodo, Fecha en formato Date.
+        v : Float
+            Valor almacenado en el nodo, Temperatura en Int
 
         Returns
         -------
-        TYPE
-            DESCRIPTION.
+        None.
 
         '''
         if not nodo_actual:
@@ -460,91 +552,50 @@ class AVL:
             return self._obtener(clave, nodo_actual.hijo_izquierdo)
         else:
             return self._obtener(clave, nodo_actual.hijo_derecho)
-
-    def __getitem__(self, clave):
-        '''
         
-
-        Parameters
-        ----------
-        clave : TYPE
-            DESCRIPTION.
-
-        Returns
-        -------
-        TYPE
-            DESCRIPTION.
-
-        '''
-        return self.obtener(clave)
-
-    def __contains__(self, clave):
-        '''
-        
-
-        Parameters
-        ----------
-        clave : TYPE
-            DESCRIPTION.
-
-        Returns
-        -------
-        bool
-            DESCRIPTION.
-
-        '''
-        if self._obtener(clave, self.raiz):
-            return True
-        else:
-            return False
-
+    
     def eliminar(self, clave):
         '''
+        Busca en el árbol el nodo que se va a eliminar. 
         
-
         Parameters
         ----------
-        clave : TYPE
-            DESCRIPTION.
-
+        clave : Date
+                Fecha en formato Date.
         Raises
         ------
         KeyError
-            DESCRIPTION.
+            No se encuentra la clave debido a que el arbol es solo un nodo
 
         Returns
         -------
         None.
 
         '''
-        if self.tamano > 1:
-           nodo_a_eliminar = self._obtener(clave, self.raiz)
-           if nodo_a_eliminar:
+        if self.tamano > 1:           
+            '''
+            Si el árbol tiene más de un nodo, buscamos usando el método "_obtener" para encontrar el NodoArbol que debe ser eliminado. 
+            '''
+            nodo_a_eliminar = self._obtener(clave, self.raiz)
+            if nodo_a_eliminar:
                self.remover(nodo_a_eliminar)
                self.tamano = self.tamano-1
-           else:
+            else:
                raise KeyError('Error, la clave no está en el árbol')
         elif self.tamano == 1 and self.raiz.clave == clave:
-           self.raiz = None
-           self.tamano = self.tamano - 1
+            '''
+            Si el árbol tiene un solo nodo, eliminamos la raíz del árbol, 
+            se comprueba que la clave de la raíz sea igual a la clave que se va a eliminar.
+            '''
+            self.raiz = None
+            self.tamano = self.tamano - 1
         else:
-           raise KeyError('Error, la clave no está en el árbol')
+            '''
+            Si no se encuentra la clave, el operador del genera un error.
+            '''
+            raise KeyError('Error, la clave no está en el árbol')
 
-    def __delitem__(self, clave):
-        '''
-        
-
-        Parameters
-        ----------
-        clave : TYPE
-            DESCRIPTION.
-
-        Returns
-        -------
-        None.
-
-        '''
-        self.eliminar(clave)
+    
 
 
     def remover(self, nodo_actual):
@@ -553,8 +604,7 @@ class AVL:
 
         Parameters
         ----------
-        nodo_actual : TYPE
-            DESCRIPTION.
+        nodo_actual : Nodo_Arbol
 
         Returns
         -------
