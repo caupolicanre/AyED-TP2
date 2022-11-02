@@ -1,3 +1,4 @@
+from datetime import date
 class NodoArbol:
     def __init__(self, clave, valor, izquierdo=None, derecho=None, padre=None):
         self.clave = clave
@@ -6,6 +7,12 @@ class NodoArbol:
         self.hijo_derecho = derecho
         self.padre = padre
         self.factor_equilibrio = 0
+        
+    def __str__(self):
+        lista=[]
+        for nodo in self.mediciones:
+            lista.append([(nodo.clave.date()), nodo.carga_util])
+        return str(lista)
 
     def tiene_hijo_izquierdo(self):
         '''
@@ -274,15 +281,15 @@ class AVL:
         nueva_raiz.factor_equilibrio = nueva_raiz.factor_equilibrio + 1 + max(rot_raiz.factor_equilibrio, 0)
     
     def rotar_derecha(self, rot_raiz):
-        nueva_raiz = rot_raiz.izq
-        rot_raiz.izq = nueva_raiz.der
+        nueva_raiz = rot_raiz.hijo_izquierdo
+        rot_raiz.hijo_izquierdo = nueva_raiz.hijo_derecho
         
         if rot_raiz.padre!= None:
           self.raiz = nueva_raiz
         else:
-            if rot_raiz.es_izq():
+            if rot_raiz.es_hijo_izquierdo():
                 rot_raiz.padre.izq = nueva_raiz
-            elif rot_raiz.es_der():
+            elif rot_raiz.es_hijo_derecho():
                 rot_raiz.padre.der = nueva_raiz
         nueva_raiz.hijo_izquierdo = rot_raiz
         rot_raiz.padre = nueva_raiz
@@ -608,21 +615,16 @@ class Iterador:
         return self
              
 if __name__ == "__main__":
-    mediciones=AVL()
-    mediciones.agregar(26, 30)
-    mediciones.agregar(1, 30)
-    # mediciones.agregar("13/01/1998", 36)
-    # mediciones.agregar("27/09/1993", 30)
-    # mediciones.agregar("03/03/2000", 21)
-    # mediciones.agregar("29/06/2003", 15)
-    # print(mediciones.tamano)
-    # print(mediciones.raiz.clave)
-    # print()
-    print(mediciones._obtener(1, mediciones.raiz))
+    mediciones = AVL()
+    mediciones.agregar(date(2021,11,9),23)
+    mediciones.agregar(date(2022,10,21),24)
+    mediciones.agregar(date(2022,12,11),19)
+    mediciones.agregar(date(2022,12,1),18)
+    mediciones.agregar(date(2021,3,13),16)    
+    mediciones.agregar(date(2019,4,19),11)                  
+    print(mediciones.tamano)
+    print(mediciones.raiz.clave)
+
     
     # for nodo in mediciones:
-    #     print(nodo.clave)
-    
-    iterador= Iterador(mediciones,1)
-    for nodo in iterador:
-        print(nodo)
+    #     print (nodo.clave, nodo.clave)
