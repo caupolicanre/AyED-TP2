@@ -143,6 +143,7 @@ class NodoArbol:
             self.hijo_izquierdo.padre = self
         if self.tiene_hijo_derecho():
             self.hijo_derecho.padre = self
+            
         
     def encontrar_sucesor(self):
             '''
@@ -167,6 +168,48 @@ class NodoArbol:
                            self.padre.hijo_derecho = self
             return suc
 
+    def encontrar_min(self):
+        '''
+        
+
+        Returns
+        -------
+        actual : TYPE
+            DESCRIPTION.
+
+        '''
+        actual = self
+        while actual.tiene_hijo_izquierdo():
+            actual = actual.hijo_izquierdo
+        return actual
+    
+    def empalmar(self):
+        '''
+        
+
+        Returns
+        -------
+        None.
+
+        '''
+        if self.es_hoja():
+            if self.es_hijo_izquierdo():
+                   self.padre.hijo_izquierdo = None
+            else:
+                   self.padre.hijo_derecho = None
+        elif self.tiene_algun_hijo():
+            if self.tiene_hijo_izquierdo():
+                   if self.es_hijo_izquierdo():
+                      self.padre.hijo_izquierdo = self.hijo_izquierdo
+                   else:
+                      self.padre.hijo_derecho = self.hijo_izquierdo
+                   self.hijo_izquierdo.padre = self.padre
+            else:
+                   if self.es_hijo_izquierdo():
+                      self.padre.hijo_izquierdo = self.hijo_derecho
+                   else:
+                      self.padre.hijo_derecho = self.hijo_derecho
+                   self.hijo_derecho.padre = self.padre
 
 
 class AVL:
@@ -503,50 +546,6 @@ class AVL:
         '''
         self.eliminar(clave)
 
-    def empalmar(self):
-        '''
-        
-
-        Returns
-        -------
-        None.
-
-        '''
-        if self.es_hoja():
-            if self.es_hijo_izquierdo():
-                   self.padre.hijo_izquierdo = None
-            else:
-                   self.padre.hijo_derecho = None
-        elif self.tiene_algun_hijo():
-            if self.tiene_hijo_izquierdo():
-                   if self.es_hijo_izquierdo():
-                      self.padre.hijo_izquierdo = self.hijo_izquierdo
-                   else:
-                      self.padre.hijo_derecho = self.hijo_izquierdo
-                   self.hijo_izquierdo.padre = self.padre
-            else:
-                   if self.es_hijo_izquierdo():
-                      self.padre.hijo_izquierdo = self.hijo_derecho
-                   else:
-                      self.padre.hijo_derecho = self.hijo_derecho
-                   self.hijo_derecho.padre = self.padre
-
-   
-
-    def encontrar_min(self):
-        '''
-        
-
-        Returns
-        -------
-        actual : TYPE
-            DESCRIPTION.
-
-        '''
-        actual = self
-        while actual.tiene_hijo_izquierdo():
-            actual = actual.hijo_izquierdo
-        return actual
 
     def remover(self, nodo_actual):
         '''
@@ -606,9 +605,9 @@ class Iterador:
         
     def __next__(self):
         nodoSalida = self.inicio
-        self.inicio =self.inicio.encontrar_sucesor()
         if self.inicio== None:
             raise StopIteration
+        self.inicio =self.inicio.encontrar_sucesor()
         return nodoSalida
              
     def __iter__(self):
@@ -627,4 +626,4 @@ if __name__ == "__main__":
 
     
     # for nodo in mediciones:
-    #     print (nodo.clave, nodo.clave)
+    #     print (nodo.clave, nodo_actual.clave)
