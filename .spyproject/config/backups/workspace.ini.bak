@@ -8,5 +8,6 @@ recent_files = ['Ejercicio3\\aplicaciones\\procesamiento.py', 'Ejercicio3\\modul
 
 [main]
 version = 0.2.0
-recent_files = []
+
+recent_files = ['Ejercicio1\\aplicaciones\\main.py', 'Ejercicio1\\modulos\\monticulo_binario.py', 'Ejercicio1\\modulos\\paciente.py']
 
