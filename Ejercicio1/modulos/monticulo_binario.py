@@ -1,10 +1,8 @@
 
-# Hacer modificaciones finales a los docstrings del montí­culo y algunas pruebas locales.
-
 class MonticuloBinario:
     
     def __init__(self):
-        self.listaMonticulo = ['']
+        self.listaMonticulo = [0]
         self.tamanoActual = 0
         self.hijoMin
         
@@ -13,7 +11,7 @@ class MonticuloBinario:
     
     def __len__(self):
         '''
-        Método mágico que retorna el tamaño del mMntí­culo.
+        Método mágico que retorna el tamaño del Montí­culo.
 
         Returns
         -------
@@ -50,7 +48,7 @@ class MonticuloBinario:
     
     def infilt_arriba(self, i):
         '''
-        Infiltra un Ã­tem hacia arriba en el Árbol hasta donde 
+        Infiltra un ítem hacia arriba en el Árbol hasta donde 
         sea necesario para mantener la propiedad de montá­culo.
 
         Parameters
