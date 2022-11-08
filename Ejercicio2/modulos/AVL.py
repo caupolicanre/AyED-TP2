@@ -10,11 +10,11 @@ class Nodo_arbol:
         self.factor_equilibrio = 0
         
         
-    def __str__(self):
-        lista=[]
-        for nodo in self.mediciones:
-            lista.append([(nodo.clave.date()), nodo.carga_util])
-        return str(lista)
+    # def __str__(self):
+    #     lista=[]
+    #     for nodo in self:
+    #         lista.append([(nodo.clave.date()), nodo.carga_util])
+    #     return str(lista)
     
 
     def tiene_hijo_izquierdo(self):

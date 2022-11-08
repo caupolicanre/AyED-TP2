@@ -1,4 +1,4 @@
-import AVL
+from AVL import AVL
 from AVL import Iterador
 from datetime import date, time, datetime
 
@@ -6,10 +6,10 @@ class Temperaturas_DB:
     
     def __init__(self):
         '''
-       Crea el arbol e inicia la variable tamanio en 0.
+       Crea una base de datos e inicia la variable tamanio en 0.
 
         '''
-        self.arbol = AVL.AVL()
+        self.base = AVL()
         self.tamanio = 0
         
     
@@ -33,7 +33,7 @@ class Temperaturas_DB:
     
     def guardar_temperatura(self, fecha, temperatura):
         '''
-        Agrega un nuevo nodo en el arbol con clave igual a "date1" y valor igual a "temperatura".
+        Guarda la temperatura correspondiente a la fecha
         
         Parameters
         ----------
@@ -42,13 +42,13 @@ class Temperaturas_DB:
         
         '''
         date1 = self.trans_fecha(fecha)
-        self.arbol.agregar(date1, temperatura)
+        self.base.agregar(date1, temperatura)
         self.tamanio += 1
         
         
     def devolver_temperatura(self,fecha):
         '''
-        
+        Devuelve la temperatura de la fecha ingresada
         Parameters
         ----------
         fecha : string
@@ -59,13 +59,12 @@ class Temperaturas_DB:
             Devuelve la temperatura en el nodo que tiene como clave a el valor de "date1".
         '''
         date1 = self.trans_fecha(fecha)
-        return self.arbol.obtener(date1)
+        return self.base.obtener(date1)
     
     
     def max_temp_rango(self, fecha1, fecha2):
         '''
-        Recorre el arbol entre "fecha1" hasta "fecha2", mientras 
-        compara el valor de la carga util de cada nodo y almacenando el mayor.
+        Devuelve las temperaturas maximas entre dos fechas
         
         Parameters
         ----------
@@ -75,23 +74,22 @@ class Temperaturas_DB:
         Returns
         -------
         Float
-            Devuelve la temperatura maxima entre las dos fechas.
+            Temperatura maxima
         '''
         date1 = self.trans_fecha(fecha1)
         date2 = self.trans_fecha(fecha2)
         max_temp = 0
-        iterador =Iterador(self.arbol, date1)
+        iterador =Iterador(self.base, date1)
         for nodo in iterador:
-            if  date1 <= nodo.clave <= date2:
-                if self.arbol.obtener(nodo.clave) > max_temp:
-                    max_temp = self.arbol.obtener(nodo.clave)
+            if nodo.clave <= date2:
+                if self.base.obtener(nodo.clave) > max_temp:
+                    max_temp = self.base.obtener(nodo.clave)
         return max_temp
     
     
     def min_temp_rango(self, fecha1, fecha2):  
         '''
-        Recorre el arbol entre "fecha1" hasta "fecha2", mientras 
-        compara el valor de la carga util de cada nodo y almacenando el menor.
+        Devuelve la temperatura minima entre las dos fechas.
         
         Parameters
         ----------
@@ -101,14 +99,14 @@ class Temperaturas_DB:
         Returns
         -------
         Float
-            Devuelve la temperatura minima entre las dos fechas.
+            Temperatura minima
         '''
         date1 = self.trans_fecha(fecha1)
         date2 = self.trans_fecha(fecha2)
-        iterador = Iterador(self.arbol, date1)
-        temp_min = self.arbol.obtener(date1)
+        iterador = Iterador(self.base, date1)
+        temp_min = self.base.obtener(date1)
         for nodo in iterador:
-            if date1 <= nodo.clave <= date2:
+            if nodo.clave <= date2:
                if nodo.carga_util < temp_min:
                    temp_min = nodo.carga_util
         return temp_min
@@ -116,7 +114,7 @@ class Temperaturas_DB:
     
     def temp_extremos_rango(self, fecha1, fecha2):
         '''
-        LLama a los modulos "max_temp_rango" y "min_temp_rango".
+        Devuelve las temperaturas maxima y minima entre las dos fechas.
         
         Parameters
         ----------
@@ -132,13 +130,10 @@ class Temperaturas_DB:
         min_temp = self.min_temp_rango(fecha1, fecha2)
         return max_temp, min_temp
     
-    '''
-    Recibe una fecha y borra la temperatura correspondiente a la fecha
-    tambien reduce la variable tamanio en 1
-    '''
+    
     def borrar_temperatura(self, fecha):
         '''
-        LLama al metodo "eliminar" para "date1" y reduce "tamanio" en -1.
+        Borra la temperatura asociada a la fecha ingresada
         
         Parameters
         ----------
@@ -147,16 +142,14 @@ class Temperaturas_DB:
         
         '''
         date1 = self.trans_fecha(fecha)
-        self.arbol.eliminar(date1)
+        self.base.eliminar(date1)
         self.tamanio -= 1
         
-    '''
-    Recibe dos fechas y devuelve una lista de tuplas
-    las cuales contienen una fecha y su temperatura correspondiente 
-    '''
+   
     def mostrar_temperaturas(self, fecha1, fecha2):
         '''
-        Agrega a una lista tuplas que contienen (fecha en formato date, temperatura).
+        Muestra por consola todas las temperatura con sus respectivas temperaturas
+        en forma de tupla
         
         Parameters
         ----------
@@ -170,23 +163,21 @@ class Temperaturas_DB:
         '''
         date1 = self.trans_fecha(fecha1)
         date2 = self.trans_fecha(fecha2)
-        iterador = AVL.Iterador(self.arbol, date1)
+        iterador = Iterador(self.base, date1)
         lista = []
         for nodo in iterador:
-            if date1 <= nodo.clave <= date2:
-                lista.append((str(nodo.clave.date()),nodo.carga_util))
+            if nodo.clave <= date2:
+                lista.append((str(nodo.clave.date()),nodo.carga_util))#Agrega a una lista tuplas que contienen (fecha en formato date, temperatura).
         return lista
             
-    '''
-    Muestra la cantidad de nodos en el arbol
-    '''
+    
     def mostrar_cantidad_muestras(self):
         '''
-        
+        Muestra la cantidad de datos en la base de datos.
         Returns
         -------
         Int
-            Devuelve el tamaño actual del arbol almacenado en "tamanio".
+            Devuelve el tamaño actual del base almacenado en "tamanio".
         '''
         cantidad = self.tamanio
         return cantidad 
@@ -204,7 +195,6 @@ if __name__ == "__main__":
     obj.guardar_temperatura("28/10/2022",3)
     
     print(obj.devolver_temperatura("25/10/2022"))
-    # print()
     print("MAX",obj.max_temp_rango("20/10/2022", "28/10/2022"))
     print("MIN",obj.min_temp_rango("20/10/2022", "28/10/2022"))
     obj.borrar_temperatura("25/10/2022")
