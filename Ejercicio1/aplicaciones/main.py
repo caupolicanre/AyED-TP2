@@ -11,6 +11,10 @@ import random
 
 n = 20  # cantidad de ciclos de simulación
 
+'''Inicializo la cola de espera como un montículo binario de mínimos, 
+así cada vez que sale de la cola un paciente, 
+es el que tiene un nivel de riesgo (1, 2 o 3) menor.
+Siendo 1: crítico, 2: moderado y 3: bajo'''
 cola_de_espera = mon.MonticuloBinario()
 
 # Ciclo que gestiona la simulación
