@@ -6,8 +6,7 @@ class Temperaturas_DB:
     
     def __init__(self):
         '''
-       Crea una base de datos e inicia la variable tamanio en 0.
-
+        Crea una base de datos e inicia la variable tamanio en 0.
         '''
         self.base = AVL()
         self.tamanio = 0
@@ -19,11 +18,11 @@ class Temperaturas_DB:
         
         Parameters
         ----------
-        Fecha : string
+        fecha : string
 
         Returns
         -------
-        Date
+        date
             Devuelve la fecha en formato date.
 
         '''
@@ -33,12 +32,12 @@ class Temperaturas_DB:
     
     def guardar_temperatura(self, fecha, temperatura):
         '''
-        Guarda la temperatura correspondiente a la fecha
+        Guarda la temperatura correspondiente a la fecha.
         
         Parameters
         ----------
-        fecha : String
-        temperatura : Float
+        fecha : string
+        temperatura : float
         
         '''
         date1 = self.trans_fecha(fecha)
@@ -46,17 +45,18 @@ class Temperaturas_DB:
         self.tamanio += 1
         
         
-    def devolver_temperatura(self,fecha):
+    def devolver_temperatura(self, fecha):
         '''
-        Devuelve la temperatura de la fecha ingresada
+        Devuelve la temperatura de la fecha ingresada.
+        
         Parameters
         ----------
         fecha : string
 
         Returns
         -------
-        Float
-            Devuelve la temperatura en el nodo que tiene como clave a el valor de "date1".
+        float
+            Temperatura en el nodo que tiene como clave a el valor de "date1".
         '''
         date1 = self.trans_fecha(fecha)
         return self.base.obtener(date1)
@@ -64,17 +64,18 @@ class Temperaturas_DB:
     
     def max_temp_rango(self, fecha1, fecha2):
         '''
-        Devuelve las temperaturas maximas entre un rango de dos fechas.
+        Devuelve as temperatura máximaa entre un 
+        rango de dos fechas recibidas.
         
         Parameters
         ----------
-        fecha1 : String
-        fecha2 : String 
+        fecha1 : string
+        fecha2 : string 
         
         Returns
         -------
-        Float
-            Temperatura maxima
+        float
+            Temperatura máxima.
         '''
         date1 = self.trans_fecha(fecha1)
         date2 = self.trans_fecha(fecha2)
@@ -89,7 +90,8 @@ class Temperaturas_DB:
     
     def min_temp_rango(self, fecha1, fecha2):  
         '''
-        Devuelve la temperatura minima entre un rango de dos fechas.
+        Devuelve la temperatura mínima entre un
+        rango de dos fechas recibidas.
         
         Parameters
         ----------
@@ -98,8 +100,8 @@ class Temperaturas_DB:
         
         Returns
         -------
-        Float
-            Temperatura minima
+        float
+            Temperatura mínima.
         '''
         date1 = self.trans_fecha(fecha1)
         date2 = self.trans_fecha(fecha2)
@@ -114,17 +116,18 @@ class Temperaturas_DB:
     
     def temp_extremos_rango(self, fecha1, fecha2):
         '''
-        Devuelve las temperaturas maxima y minima entre las dos fechas.
+        Devuelve las temperaturas máxima y mínima entre 
+        las dos fechas recibidas.
         
         Parameters
         ----------
-        fecha1 : String
-        fecha2 : String 
+        fecha1 : string
+        fecha2 : string 
         
         Returns
         -------
-        Float
-            Devuelve las temperaturas maxima y minima entre las dos fechas.
+        float
+            Devuelve las temperaturas maxima y minima dentro del rango.
         '''
         max_temp = self.max_temp_rango(fecha1, fecha2)
         min_temp = self.min_temp_rango(fecha1, fecha2)
@@ -133,7 +136,7 @@ class Temperaturas_DB:
     
     def borrar_temperatura(self, fecha):
         '''
-        Borra la temperatura asociada a la fecha ingresada
+        Borra la temperatura asociada a la fecha ingresada.
         
         Parameters
         ----------
@@ -152,12 +155,12 @@ class Temperaturas_DB:
         
         Parameters
         ----------
-        fecha1 : String
-        fecha2 : String 
+        fecha1 : string
+        fecha2 : string 
         
         Returns
         -------
-        List
+        list
             Devuelve la lista con todas las tuplas.
         '''
         date1 = self.trans_fecha(fecha1)
@@ -166,20 +169,20 @@ class Temperaturas_DB:
         lista = []
         for nodo in iterador:
             if nodo.clave <= date2:
-                lista.append((str(nodo.clave.date()),nodo.carga_util))#Agrega a una lista tuplas que contienen (fecha en formato date, temperatura).
+                lista.append((str(nodo.clave.date()), nodo.carga_util)) # Agrega a una lista tuplas, que contienen (fecha en formato date, temperatura).
         return lista
             
     
     def mostrar_cantidad_muestras(self):
         '''
         Muestra la cantidad de datos en la base de datos.
+        
         Returns
         -------
-        Int
-            Devuelve el tamaño actual del base almacenado en "tamanio".
+        int
+            Devuelve el tamaño actual del base de datos.
         '''
-        cantidad = self.tamanio
-        return cantidad 
+        return self.tamanio
         
 if __name__ == "__main__":
     obj=Temperaturas_DB()

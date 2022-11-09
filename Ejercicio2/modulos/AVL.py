@@ -246,7 +246,8 @@ class AVL:
     
     def __getitem__(self, clave):
         '''
-       Llama al metodo "obtener"
+        Llama al metodo "obtener".
+        
         Parameters
         ----------
         clave : Any type
@@ -254,7 +255,7 @@ class AVL:
         Returns
         -------
         Any type
-            Devuelve el valor almacenado en la carga util del nodo 
+            Devuelve el valor almacenado en la carga util del nodo.
 
         '''
         return self.obtener(clave)
@@ -481,7 +482,7 @@ class AVL:
                     self.actualizar_equilibrio(nodo.padre)
                     
     
-    def reequilibrar(self,nodo):
+    def reequilibrar(self, nodo):
         '''
 
         Parameters
@@ -510,7 +511,7 @@ class AVL:
     def obtener(self, clave):
         '''
         Recorre el arbol en forma recursiva hasta que llega a un nodo hoja no coincidente 
-        o encuentra la clave recibida y devuelve el valor guardado en la carga util del nodo
+        o encuentra la clave recibida y devuelve el valor guardado en la carga util del nodo.
         '''
         if self.raiz:
             res = self._obtener(clave, self.raiz)
@@ -524,18 +525,19 @@ class AVL:
 
     def _obtener(self, clave, nodo_actual):
         '''
-        Llama al método "agregar".
+        
 
         Parameters
         ----------
-        c : Date
-            Clave del Nodo, Fecha en formato Date.
-        v : Float
-            Valor almacenado en el nodo, Temperatura en Int
+        clave : date
+            Clave del Nodo.
+        nodo_actual : Nodo_arbol()
+            DESCRIPTION.
 
         Returns
         -------
-        None.
+        TYPE
+            DESCRIPTION.
 
         '''
         if not nodo_actual:
@@ -559,7 +561,7 @@ class AVL:
         Raises
         ------
         KeyError
-            No se encuentra la clave debido a que el arbol es solo un nodo
+            No se encuentra la clave debido a que el arbol es solo un nodo.
 
         Returns
         -------
