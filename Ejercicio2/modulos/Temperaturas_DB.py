@@ -1,6 +1,6 @@
 from AVL import AVL
 from AVL import Iterador
-from datetime import date, time, datetime
+from datetime import datetime
 
 class Temperaturas_DB:
     
@@ -64,7 +64,7 @@ class Temperaturas_DB:
     
     def max_temp_rango(self, fecha1, fecha2):
         '''
-        Devuelve las temperaturas maximas entre dos fechas
+        Devuelve las temperaturas maximas entre un rango de dos fechas.
         
         Parameters
         ----------
@@ -89,7 +89,7 @@ class Temperaturas_DB:
     
     def min_temp_rango(self, fecha1, fecha2):  
         '''
-        Devuelve la temperatura minima entre las dos fechas.
+        Devuelve la temperatura minima entre un rango de dos fechas.
         
         Parameters
         ----------
@@ -148,8 +148,7 @@ class Temperaturas_DB:
    
     def mostrar_temperaturas(self, fecha1, fecha2):
         '''
-        Muestra por consola todas las fechas con sus respectivas temperaturas
-        en forma de tupla
+        Muestra por consola las temperaturas en el rango recibido.
         
         Parameters
         ----------
