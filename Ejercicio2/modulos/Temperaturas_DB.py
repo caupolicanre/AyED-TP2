@@ -148,7 +148,7 @@ class Temperaturas_DB:
    
     def mostrar_temperaturas(self, fecha1, fecha2):
         '''
-        Muestra por consola todas las temperatura con sus respectivas temperaturas
+        Muestra por consola todas las fechas con sus respectivas temperaturas
         en forma de tupla
         
         Parameters
