@@ -443,7 +443,7 @@ class AVL:
         nueva_raiz = rot_raiz.hijo_izquierdo
         rot_raiz.hijo_izquierdo = nueva_raiz.hijo_derecho
         
-        if rot_raiz.padre!= None:
+        if rot_raiz.es_raiz():
           self.raiz = nueva_raiz
         else:
             if rot_raiz.es_hijo_izquierdo():
