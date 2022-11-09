@@ -49,6 +49,7 @@ class Paciente:
         '''
         if self.__riesgo == other.__riesgo:
             return self.__turno < other.__turno
+        
         return self.__riesgo < other.__riesgo
     
     

@@ -5,12 +5,15 @@ class MonticuloBinario:
     Se implementa con un árbol binario completo, es decir,
     un árbol en el que cada nivel tiene todos sus nodos.
     
+    Orden de complejidad para inserciones:
+        O(n log n) 
+    Orden de complejidad para eliminaciones:
+        O(n log n) 
     '''    
     
     def __init__(self):
         self.listaMonticulo = [0]
         self.tamanoActual = 0
-        self.hijoMin
         
         
     # Métodos Mágicos
@@ -60,7 +63,8 @@ class MonticuloBinario:
         Parameters
         ----------
         i : int
-            Tamaño del Montí­culo.
+            Recibe como parámetro el tamaño del Montí­culo.
+            Luego, se va actualizando con el índice actual del ítem insertado.
 
         Returns
         -------
@@ -68,11 +72,11 @@ class MonticuloBinario:
 
         '''
         while i // 2 > 0:
-          if self.listaMonticulo[i] < self.listaMonticulo[i // 2]:  # Si el Nodo insertado es menor a su padre, los intercambio de posición
-             temp = self.listaMonticulo[i // 2]
-             self.listaMonticulo[i // 2] = self.listaMonticulo[i]
-             self.listaMonticulo[i] = temp
-          i = i // 2  # Actualizo el índice del nodo
+            if self.listaMonticulo[i] < self.listaMonticulo[i // 2]:  # Si el Nodo insertado es menor a su padre, los intercambio de posición
+                temp = self.listaMonticulo[i // 2]
+                self.listaMonticulo[i // 2] = self.listaMonticulo[i]
+                self.listaMonticulo[i] = temp
+            i = i // 2  # Actualizo el índice del nodo insertado
     
     
     def insertar(self, k):
@@ -103,7 +107,9 @@ class MonticuloBinario:
         Parameters
         ----------
         i : int
-            Hijo menor de la raí­z del Montí­culo.
+            Recibe como parámetro el índice de la raíz del Montículo (1).
+            Luego se va modificando con el índice 
+            del Hijo menor de la raí­z del Montí­culo.
 
         Returns
         -------
@@ -111,7 +117,7 @@ class MonticuloBinario:
 
         '''
         while (i * 2) <= self.tamanoActual:
-            hm = self.hijoMin(i)
+            hm = self.hijoMin(i) # Hijo Menor
             if self.listaMonticulo[i] > self.listaMonticulo[hm]:    # Si el nodo es mayor a su hijo, los intercambio de posición
                 temp = self.listaMonticulo[i]
                 self.listaMonticulo[i] = self.listaMonticulo[hm]
@@ -138,8 +144,10 @@ class MonticuloBinario:
             return i * 2
         else:
             if self.listaMonticulo[i*2] < self.listaMonticulo[i*2+1]:
+                '''Hijo Izquierdo es menor'''
                 return i * 2
             else:
+                '''Hijo Derecho es menor'''
                 return i * 2 + 1
     
     
@@ -155,48 +163,10 @@ class MonticuloBinario:
             Valor mínimo extraído del montículo.
 
         '''
-        valorSacado = self.listaMonticulo[1] # Valor mínimo extraído del montículo.
+        valorSacado = self.listaMonticulo[1] # Valor mínimo extraído del montículo (Raíz).
         self.listaMonticulo[1] = self.listaMonticulo[self.tamanoActual] # Actualizo la raíz con el último item de la lista
         self.tamanoActual = self.tamanoActual - 1
         self.listaMonticulo.pop()
         self.infilt_abajo(1) # Restauro la propiedad de montículo, infiltrando hacia abajo el nuevo nodo raiz hasta su posición correcta
         
         return valorSacado
-    
-    
-    # Método implementado para realizar pruebas locales
-    def construir_monticulo(self, unaLista):
-        '''
-        Construye un Montículo completo a partir de una lista de claves.
-
-        Parameters
-        ----------
-        unaLista : list
-            Lista de claves para crear el Montículo.
-
-        Returns
-        -------
-        None.
-
-        '''
-        i = len(unaLista) // 2
-        self.tamanoActual = len(unaLista)
-        self.listaMonticulo = [0] + unaLista[:]
-        while (i > 0):
-            self.infilt_abajo(i)
-            i = i - 1
-
-
-
-# Pruebas locales
-
-if __name__ == '__main__':
-    
-    miMonticulo = MonticuloBinario()
-    miMonticulo.construir_monticulo([9,5,6,2,3])
-    
-    print(miMonticulo.eliminar_min())
-    print(miMonticulo.eliminar_min())
-    print(miMonticulo.eliminar_min())
-    print(miMonticulo.eliminar_min())
-    print(miMonticulo.eliminar_min())
