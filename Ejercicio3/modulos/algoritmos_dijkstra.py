@@ -82,9 +82,8 @@ def dijkstra_precio(grafo, inicio):
     cp = ColaPrioridadMin()
     
     '''
-    Se inicializa con 0 el inicio, ya que es el mejor caso, así cuando se comparan los
-    precios, se actualiza con el menor entre el vértice de inicio y la ponderación (Precio) 
-    para llegar al siguiente Vértice.
+    Se inicializa con 0 el inicio, ya que es el mejor caso, y se va actualizando con la suma de precios
+    entre el vértice de inicio y la ponderación del siguiente Vértice (Precio)
     '''
     inicio.asignarDistancia(0)
     
