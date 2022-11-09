@@ -4,7 +4,7 @@ save_data_on_exit = True
 save_history = True
 save_non_project_files = False
 project_type = 'empty-project-type'
-recent_files = ['Ejercicio1\\aplicaciones\\main.py', 'Ejercicio1\\modulos\\monticulo_binario.py', 'Ejercicio1\\modulos\\paciente.py']
+recent_files = ['Ejercicio1\\aplicaciones\\main.py', 'Ejercicio1\\aplicaciones\\main2.py', 'Ejercicio1\\modulos\\monticulo_binario.py', 'Ejercicio1\\modulos\\paciente.py']
 
 [main]
 version = 0.2.0
