@@ -126,7 +126,7 @@ class ColaPrioridadMax:
 
         '''
         while (i * 2) <= self.tamanoActual:
-            hm = self.hijoMax(i)    # Hijo 
+            hm = self.hijoMax(i)    # Hijo máximo
             if self.listaMonticulo[i][0] < self.listaMonticulo[hm][0]:
                 temp = self.listaMonticulo[i]
                 self.listaMonticulo[i] = self.listaMonticulo[hm]
@@ -182,6 +182,21 @@ class ColaPrioridadMax:
         return self.listaMonticulo[1][1]
     
     def decrementarClave(self, valor, nuevaClave):
+        '''
+        
+
+        Parameters
+        ----------
+        valor : TYPE
+            DESCRIPTION.
+        nuevaClave : TYPE
+            DESCRIPTION.
+
+        Returns
+        -------
+        None.
+
+        '''
         hecho = False
         i = 1
         clave = 0

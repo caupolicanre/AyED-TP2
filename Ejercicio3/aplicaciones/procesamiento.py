@@ -79,7 +79,7 @@ def obtener_menor_precio(grafo, de: str, a: str):
     '''
     Aplico el algoritmo de dijkstra sobre el Grafo, 
     dándole una ciudad inicial. Luego del procesamiento, 
-    retorno el menor precio para llegar a la ciudad destino.
+    retorno el precio tota para llegar a la ciudad destino.
 
     Parameters
     ----------
@@ -106,7 +106,7 @@ def obtener_menor_precio(grafo, de: str, a: str):
     
     '''
     Luego del procesamiento, el Vértice destino guarda en su atributo de distancia,
-    la Ponderación con el menor precio para llegar hasta él desde la ciudad inicial.
+    la Ponderación con el precio total para llegar hasta él desde la ciudad inicial.
     '''
     return grafo[a].obtenerDistancia()
 
@@ -155,7 +155,7 @@ def evaluar_opciones_de_transporte(de: str, a: str, archivo: str = 'rutas.txt'):
     Recibe una ciudad inicial, una ciudad destino, y un archivo de rutas (opcional),
     Crea 2 grafos (Uno para la capacidad de carga y otro para el precio), aplica el
     algoritmo de dijkstra, y retorna cual es la ruta a seguir con su mayor cuello de
-    botella y su menor precio.
+    botella y precio total.
 
     Parameters
     ----------
@@ -170,7 +170,7 @@ def evaluar_opciones_de_transporte(de: str, a: str, archivo: str = 'rutas.txt'):
     -------
     mayor_cuello_de_botella : int
         Mayor cuello de botella de capacidad de carga para la ruta óptima.
-    menor_precio : TYPE
+    precio_total : int
         Menor precio de costo para la ruta óptima.
     ruta : list
         Lista de las ciudades de la ruta óptima.
@@ -202,8 +202,8 @@ def evaluar_opciones_de_transporte(de: str, a: str, archivo: str = 'rutas.txt'):
     grafo_precios_minimos = Grafo()
     
     for linea in datos:
-        deCiudad = linea[0]
-        aCiudad = linea[1]
+        de_ciudad = linea[0]
+        a_ciudad = linea[1]
         peso = linea[2]
         precio = linea[3]
         
@@ -216,13 +216,13 @@ def evaluar_opciones_de_transporte(de: str, a: str, archivo: str = 'rutas.txt'):
             Lleno el grafo solo con los vértices y aristas que tengan un cuello de botella 
             mayor o igual al obtenido en el procesamiento anterior de dijkstra.
             '''
-            grafo_precios_minimos.agregarArista(deCiudad, aCiudad, precio)
+            grafo_precios_minimos.agregarArista(de_ciudad, a_ciudad, precio)
     
     # Aplico dijkstra y guardo el menor precio
-    menor_precio = obtener_menor_precio(grafo_precios_minimos, de, a)
+    precio_total = obtener_menor_precio(grafo_precios_minimos, de, a)
     
     # Obtengo la ruta a seguir
     ruta = obtener_ruta(grafo_precios_minimos, de, a)
     
     '''Una vez procesado todo, retorno el mayor cuello de botella (int), el menor precio (int), y la ruta a seguir.'''
-    return mayor_cuello_de_botella, menor_precio, ruta
+    return mayor_cuello_de_botella, precio_total, ruta

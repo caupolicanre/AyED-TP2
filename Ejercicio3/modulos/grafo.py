@@ -21,6 +21,23 @@ class Vertice:
         return str(self.clave) + ' conectadoA: ' + str([x.id for x in self.conectadoA])
 
     def agregarVecino(self, vecino, ponderacion=0):
+        '''
+        Agrega un vecino al Vértice actual con la 
+        ponderación para llegar a éste.
+
+        Parameters
+        ----------
+        vecino : Vertice()
+            Vecino del vértice actual.
+        ponderacion : int, optional
+            Ponderación de la arista que conecta a los vértices.
+            Por defecto es 0.
+
+        Returns
+        -------
+        None.
+
+        '''
         self.conectadoA[vecino] = ponderacion
 
     def obtenerConexiones(self):
@@ -102,6 +119,20 @@ class Grafo:
         return nuevoVertice
 
     def obtenerVertice(self, n):
+        '''
+        Busca al Vértice en el Grafo, y lo retorna.
+
+        Parameters
+        ----------
+        n : Clave
+            Clave del vértice a buscar.
+
+        Returns
+        -------
+        TYPE
+            DESCRIPTION.
+
+        '''
         if n in self.listaVertices:
             return self.listaVertices[n]
         else:
