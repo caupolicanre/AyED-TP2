@@ -25,4 +25,4 @@ for ciudad in ruta:
 
 
 print(f"\nMayor capacidad de carga: {mayor_cuello_de_botella}")
-print(f"Precio total: {precio_total*1000}")
+print(f"Precio total: ${precio_total*1000}")
