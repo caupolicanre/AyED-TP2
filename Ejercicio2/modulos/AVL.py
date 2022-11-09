@@ -152,7 +152,7 @@ class Nodo_arbol:
         
     def encontrar_sucesor(self):
             '''
-            
+            Encuentra el sucesor del Nodo actual.
 
             Returns
             -------
@@ -185,12 +185,12 @@ class Nodo_arbol:
 
     def encontrar_min(self):
         '''
-        Toma el hijo del nodo de un nodo repetitivamente hasta que el nodo en el que esta no tenga hijo izquierdo
+        Toma el hijo del nodo de un nodo repetitivamente, hasta que el nodo en el que esta no tenga hijo izquierdo
 
         Returns
         -------
         actual : Nodo_Arbol
-            DESCRIPTION.
+            Nodo mínimo.
 
         '''
         actual = self
@@ -201,7 +201,7 @@ class Nodo_arbol:
     
     def empalmar(self):
         '''
-        Elimina el sucesor del nodo
+        Elimina el sucesor del nodo.
 
         Returns
         -------
@@ -211,17 +211,18 @@ class Nodo_arbol:
         if self.es_hoja():
             if self.es_hijo_izquierdo():
                 '''
-                Si el nodo es hoja y a su vez es hijo izquierdo el padre de este nodo va a ser None
+                Elimina la referencia del padre con el sucesor.
                 '''
                 self.padre.hijo_izquierdo = None
             else:
                 '''
-                Hace None al padre
+                Elimina la referencia del padre con el sucesor.
                 '''
                 self.padre.hijo_derecho = None
+                
         elif self.tiene_algun_hijo():
             '''
-            Si el nodo tiene un hijo transforma conecta a su nodo hijo derecho o izquierdo con su nodo padre
+            Se conectan las referencias de los nodos, eliminando así, al sucesor
             '''
             if self.tiene_hijo_izquierdo():
                    if self.es_hijo_izquierdo():
@@ -243,6 +244,8 @@ class AVL:
         self.raiz = None
         self.tamano = 0     # Contador del tamaño del Árbol
         
+        
+    # Métodos mágicos
     
     def __getitem__(self, clave):
         '''
@@ -254,12 +257,11 @@ class AVL:
 
         Returns
         -------
-        Any type
+        any type
             Devuelve el valor almacenado en la carga util del nodo.
 
         '''
         return self.obtener(clave)
-    
     
     def __len__(self):
         '''
@@ -273,15 +275,17 @@ class AVL:
         '''
         return self.tamano
     
-    
     def __setitem__(self, c, v):
         '''
+        Nos permite usar el operador []
         Llama al método "agregar".
 
         Parameters
         ----------
-        c : Clave del Nodo, en este caso es la fecha
-        v : Valor almacenado en el nodo, en este caso es la temperatura
+        c : any type
+            Clave del Nodo a agregar.
+        v : any type
+            Valor del Nodo a agregar.
 
         Returns
         -------
@@ -289,16 +293,16 @@ class AVL:
 
         '''
         self.agregar(c, v)
-        
-        
+          
     def __contains__(self, clave):
         '''
+        Nos permite usar el operador "in".
         Llama al metodo "obtener".
 
         Parameters
         ----------
-        clave : Date
-                Fecha en formato Date.
+        clave : any type
+            Clave a obtener en el Árbol.
 
         Returns
         -------
@@ -318,8 +322,8 @@ class AVL:
 
         Parameters
         ----------
-        clave : Date
-                Fecha en formato Date.
+        clave : any type
+            Clave a eliminar en el Árbol.
 
         Returns
         -------
@@ -378,7 +382,7 @@ class AVL:
     def _agregar(self, clave, valor, nodo_actual):
         '''
         Mientras busca compara la clave recibida con la clave del nodo actual y las compara
-        dependiendo de el resultado de la comparacion es donde se va a agregar el nuevo nodo
+        dependiendo de el resultado de la comparacion es donde se va a agregar el nuevo nodo.
 
         Parameters
         ----------
@@ -387,7 +391,8 @@ class AVL:
         valor : 
             Carga útil que contiene el Nodo a agregar.
         nodo_actual : 
-            Posicion en la que se va a agrega el nuevo nodo
+            Nodo en donde se posiciona la función 
+            para continuar con las comparaciones.
 
         Returns
         -------
@@ -419,6 +424,15 @@ class AVL:
                 nodo_actual.hijo_derecho = Nodo_arbol(clave, valor, padre=nodo_actual)
                 self.actualizar_equilibrio(nodo_actual.hijo_derecho)
     
+    
+    
+    '''
+    El nuevo equilibrio de B (nuevoEquilibrio(B)) es igual a la altura de A menos la altura de C (hA - hC)
+    nuevoEquilibrio(B) = hA - hC
+    
+    El viejo equilibrio de B (viejoEquilibrio(B)) es igual a la altura de A menos la altura de D (hA - hD)
+    viejoEquilibrio(B) = hA - hD
+    '''
     
     def rotar_izquierda(self, rot_raiz):
         nueva_raiz = rot_raiz.hijo_derecho
@@ -484,6 +498,8 @@ class AVL:
     
     def reequilibrar(self, nodo):
         '''
+        Cuando un Nodo está desequilibrado, se llama a esta función,
+        y se realiza la rotación necesaria para actualizar el factor de equilibrio.
 
         Parameters
         ----------
@@ -511,7 +527,8 @@ class AVL:
     def obtener(self, clave):
         '''
         Recorre el arbol en forma recursiva hasta que llega a un nodo hoja no coincidente 
-        o encuentra la clave recibida y devuelve el valor guardado en la carga util del nodo.
+        o encuentra la clave recibida. 
+        Se devuelve el valor guardado en la carga util del nodo.
         '''
         if self.raiz:
             res = self._obtener(clave, self.raiz)
@@ -525,14 +542,15 @@ class AVL:
 
     def _obtener(self, clave, nodo_actual):
         '''
-        
+        Función recursiva que utiliza la misma lógica de 
+        el hijo izquierdo o derecho que se usa en "_agregar".
 
         Parameters
         ----------
         clave : date
-            Clave del Nodo.
+            Clave del Nodo a buscar.
         nodo_actual : Nodo_arbol()
-            DESCRIPTION.
+            Nodo donde se posiciona la función para continuar las comparaciones.
 
         Returns
         -------
@@ -556,8 +574,9 @@ class AVL:
         
         Parameters
         ----------
-        clave : Date
-                Fecha en formato Date.
+        clave : any type
+            Clave a eliminar del Nodo.
+            
         Raises
         ------
         KeyError
@@ -607,11 +626,12 @@ class AVL:
         None.
 
         '''
-        if nodo_actual.es_hoja(): #hoja
+        if nodo_actual.es_hoja(): # El nodo actual es hoja
           if nodo_actual == nodo_actual.padre.hijo_izquierdo:
               nodo_actual.padre.hijo_izquierdo = None
           else:
               nodo_actual.padre.hijo_derecho = None
+              
         elif nodo_actual.tiene_ambos_hijos(): #interior
           suc = nodo_actual.encontrar_sucesor()
           suc.empalmar()
