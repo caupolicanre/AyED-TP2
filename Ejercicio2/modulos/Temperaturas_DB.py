@@ -85,6 +85,8 @@ class Temperaturas_DB:
             if nodo.clave <= date2:
                 if self.base.obtener(nodo.clave) > max_temp:
                     max_temp = self.base.obtener(nodo.clave)
+            else:
+                break;
         return max_temp
     
     
@@ -111,6 +113,8 @@ class Temperaturas_DB:
             if nodo.clave <= date2:
                if nodo.carga_util < temp_min:
                    temp_min = nodo.carga_util
+            else:
+                break;
         return temp_min
     
     
@@ -170,6 +174,8 @@ class Temperaturas_DB:
         for nodo in iterador:
             if nodo.clave <= date2:
                 lista.append((str(nodo.clave.date()), nodo.carga_util)) # Agrega a una lista tuplas, que contienen (fecha en formato date, temperatura).
+            else:
+                break;
         return lista
             
     
