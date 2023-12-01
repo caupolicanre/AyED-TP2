@@ -1,9 +1,8 @@
-
 class MonticuloBinario:
     '''
-    Montículo Binario de mínimos.
-    Se implementa con un árbol binario completo, es decir,
-    un árbol en el que cada nivel tiene todos sus nodos.
+    Montï¿½culo Binario de mï¿½nimos.
+    Se implementa con un ï¿½rbol binario completo, es decir,
+    un ï¿½rbol en el que cada nivel tiene todos sus nodos.
     
     Orden de complejidad para inserciones:
         O(n log n) 
@@ -16,16 +15,16 @@ class MonticuloBinario:
         self.tamanoActual = 0
         
         
-    # Métodos Mágicos
+    # Mï¿½todos Mï¿½gicos
     
     def __len__(self):
         '''
-        Método mágico que retorna el tamaño del Montí­culo.
+        Mï¿½todo mï¿½gico que retorna el tamaï¿½o del Montï¿½ï¿½culo.
 
         Returns
         -------
         int
-            Entero que representa el tamaño del Montí­culo.
+            Entero que representa el tamaï¿½o del Montï¿½ï¿½culo.
 
         '''
         return self.tamanoActual
@@ -33,7 +32,7 @@ class MonticuloBinario:
     
     def __iter__(self):
         '''
-        Método para iterar el Montí­culo.
+        Mï¿½todo para iterar el Montï¿½ï¿½culo.
         '''
         
         for i in self.listaMonticulo:
@@ -42,29 +41,29 @@ class MonticuloBinario:
     
     def __str__(self):
         '''
-        Retorna todos los elementos del Montí­culo.
+        Retorna todos los elementos del Montï¿½ï¿½culo.
 
         Returns
         -------
         str
-            String con todos los elementos del Montí­culo.
+            String con todos los elementos del Montï¿½ï¿½culo.
 
         '''
         return str(self.listaMonticulo)
     
     
-    # Métodos
+    # Mï¿½todos
     
     def infilt_arriba(self, i):
         '''
-        Infiltra un ítem hacia arriba en el Árbol hasta donde 
-        sea necesario para mantener la propiedad de montí­culo.
+        Infiltra un ï¿½tem hacia arriba en el ï¿½rbol hasta donde 
+        sea necesario para mantener la propiedad de montï¿½ï¿½culo.
 
         Parameters
         ----------
         i : int
-            Recibe como parámetro el tamaño del Montí­culo.
-            Luego, se va actualizando con el índice actual del ítem insertado.
+            Recibe como parï¿½metro el tamaï¿½o del Montï¿½ï¿½culo.
+            Luego, se va actualizando con el ï¿½ndice actual del ï¿½tem insertado.
 
         Returns
         -------
@@ -72,22 +71,22 @@ class MonticuloBinario:
 
         '''
         while i // 2 > 0:
-            if self.listaMonticulo[i] < self.listaMonticulo[i // 2]:  # Si el Nodo insertado es menor a su padre, los intercambio de posición
+            if self.listaMonticulo[i] < self.listaMonticulo[i // 2]:  # Si el Nodo insertado es menor a su padre, los intercambio de posiciï¿½n
                 temp = self.listaMonticulo[i // 2]
                 self.listaMonticulo[i // 2] = self.listaMonticulo[i]
                 self.listaMonticulo[i] = temp
-            i = i // 2  # Actualizo el índice del nodo insertado
+            i = i // 2  # Actualizo el ï¿½ndice del nodo insertado
     
     
     def insertar(self, k):
         '''
-        Recibe un í­tem como parámetro, lo inserta en el Montí­culo y llama
-        al método "infilt_arriba".
+        Recibe un ï¿½ï¿½tem como parï¿½metro, lo inserta en el Montï¿½ï¿½culo y llama
+        al mï¿½todo "infilt_arriba".
 
         Parameters
         ----------
         k : int
-            Ítem que se inserta en el Montí­culo.
+            Ítem que se inserta en el Montï¿½ï¿½culo.
 
         Returns
         -------
@@ -101,15 +100,15 @@ class MonticuloBinario:
     
     def infilt_abajo(self, i):
         '''
-        Infiltra un Ítem hacia abajo en el Árbol hasta donde 
-        sea necesario para mantener la propiedad de montí­culo.
+        Infiltra un ï¿½tem hacia abajo en el ï¿½rbol hasta donde 
+        sea necesario para mantener la propiedad de montï¿½ï¿½culo.
 
         Parameters
         ----------
         i : int
-            Recibe como parámetro el índice de la raíz del Montículo (1).
-            Luego se va modificando con el índice 
-            del Hijo menor de la raí­z del Montí­culo.
+            Recibe como parï¿½metro el ï¿½ndice de la raï¿½z del Montï¿½culo (1).
+            Luego se va modificando con el ï¿½ndice 
+            del Hijo menor de la raï¿½ï¿½z del Montï¿½ï¿½culo.
 
         Returns
         -------
@@ -118,26 +117,26 @@ class MonticuloBinario:
         '''
         while (i * 2) <= self.tamanoActual:
             hm = self.hijoMin(i) # Hijo Menor
-            if self.listaMonticulo[i] > self.listaMonticulo[hm]:    # Si el nodo es mayor a su hijo, los intercambio de posición
+            if self.listaMonticulo[i] > self.listaMonticulo[hm]:    # Si el nodo es mayor a su hijo, los intercambio de posiciï¿½n
                 temp = self.listaMonticulo[i]
                 self.listaMonticulo[i] = self.listaMonticulo[hm]
                 self.listaMonticulo[hm] = temp
-            i = hm  # Actualizo el índice del nodo
+            i = hm  # Actualizo el ï¿½ndice del nodo
     
     
     def hijoMin(self, i):
         '''
-        Encuentra el Hijo mí­nimo de un í­tem.
+        Encuentra el Hijo mï¿½ï¿½nimo de un ï¿½ï¿½tem.
 
         Parameters
         ----------
         i : int
-            Índice del ítem.
+            ï¿½ndice del ï¿½tem.
 
         Returns
         -------
         int
-            Índice del hijo mínimo del ítem.
+            ï¿½ndice del hijo mï¿½nimo del ï¿½tem.
 
         '''
         if i * 2 + 1 > self.tamanoActual:
@@ -153,20 +152,20 @@ class MonticuloBinario:
     
     def eliminar_min(self):
         '''
-        Elimina el valor mí­nimo del Montí­culo (Elemento que se encuentra primero en la lista).
+        Elimina el valor mï¿½ï¿½nimo del Montï¿½ï¿½culo (Elemento que se encuentra primero en la lista).
         Gran parte del proceso se realiza 
-        cuando se llama al método: "infilt_abajo"
+        cuando se llama al mï¿½todo: "infilt_abajo"
 
         Returns
         -------
         valorSacado : any type
-            Valor mínimo extraído del montículo.
+            Valor mï¿½nimo extraï¿½do del montï¿½culo.
 
         '''
-        valorSacado = self.listaMonticulo[1] # Valor mínimo extraído del montículo (Raíz).
-        self.listaMonticulo[1] = self.listaMonticulo[self.tamanoActual] # Actualizo la raíz con el último item de la lista
+        valorSacado = self.listaMonticulo[1] # Valor mï¿½nimo extraï¿½do del montï¿½culo (Raï¿½z).
+        self.listaMonticulo[1] = self.listaMonticulo[self.tamanoActual] # Actualizo la raï¿½z con el ï¿½ltimo item de la lista
         self.tamanoActual = self.tamanoActual - 1
         self.listaMonticulo.pop()
-        self.infilt_abajo(1) # Restauro la propiedad de montículo, infiltrando hacia abajo el nuevo nodo raiz hasta su posición correcta
+        self.infilt_abajo(1) # Restauro la propiedad de montï¿½culo, infiltrando hacia abajo el nuevo nodo raiz hasta su posiciï¿½n correcta
         
         return valorSacado
